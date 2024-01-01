@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content%}
+{% load static %}
+
+
+<main class='container'>
+    {% for product in products %}
+    <div class="card-product">
+        <a href="{% url 'product' product.id %}">
+            <p>{{ product.name }}</p>
+            <img class='img-product' src={{ product.image_url.url}} alt="image-product"/>
+            <p class="text-product">{{ product.price }}</p>
+            {% if product.descount > 0 %}
+            <p>{{product.descount}} % </p>
+            {% endif %}
+        </a> 
+    </div>
+    {% endfor %}
+</main>
+{% endblock %}
