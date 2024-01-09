@@ -2,11 +2,11 @@
 
 {% block content%}
 {% load static %}
-<main>
-    <div>
-        <img src={{ product.image_url.url }}/>
+<main class="container-detail">
+    <div class="card-detail-product">
+        <img class="img-detail-product" src={{ product.image_url.url }}/>
         <p>{{ product.price }} </p>
-        <p>{{product.name}}</p>
+        <p>{{ product.name }}</p>
         <p>{{ product.description }}</p>
         {% if product.descount > 0 %}
             <p>{{product.descount}} % </p>

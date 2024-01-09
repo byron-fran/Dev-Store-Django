@@ -1,6 +1,11 @@
 
 
 <main>
-    {{form}}
-    <button type="submit">Register</button>
-</main>
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Register</button>
+    </form>
+   
+ 
+</main>\
