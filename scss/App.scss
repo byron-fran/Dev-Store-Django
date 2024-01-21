@@ -2,5 +2,10 @@
 @import './base/normalize';
 @import './base/body';
 @import './base/mixins';
+//colors
+@import './colors/colors';
 //products
 @import './products/products';
+
+//auth
+@import './forms/forms';

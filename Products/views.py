@@ -1,6 +1,7 @@
 #import a list view
 from django.views.generic import ListView, DetailView
 from .models import Product
+from django.shortcuts import get_list_or_404, redirect
 
 class ProducstListView(ListView):
     model = Product
@@ -13,3 +14,4 @@ class ProductDetailView(DetailView):
     model = Product
     context_object_name = 'product'
     template_name = 'product.html'
+    

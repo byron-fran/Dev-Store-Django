@@ -10,3 +10,4 @@ class Product (models.Model):
     image_url = models.FileField(upload_to='products/')
     descount = models.FloatField()
     
+

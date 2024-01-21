@@ -31,6 +31,5 @@ const server = () => {
     watch('scss/**/*.scss', series(css)).on('change', browserSync.reload);
     watch('**/**/*.html').on('change', browserSync.reload); // Refrescar cuando los archivos HTML cambian
 };
-
 // exports.images = images;
 exports.default = series(css, server);
