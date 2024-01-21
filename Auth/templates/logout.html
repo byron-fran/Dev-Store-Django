@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<main>
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button class='btn' type="submit">Salir</button>
+    </form>
+   
+ 
+</main>
+{% endblock %}

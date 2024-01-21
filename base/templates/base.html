@@ -10,13 +10,12 @@
 
     {% load static %}
 
-    <!-- Bootstrap -->
     <link href="{% static 'css/App.css' %}" rel="stylesheet">
 
   </head>
 
   <body>
-  
+    {% include 'navbar.html' %}
     {% block content %}
     {% endblock %}
 
