@@ -2,6 +2,7 @@
 
 {% block content%}
 {% load static %}
+{% include 'navbar.html' %}
 <main class="container-detail">
     <div class="card-detail-product">
         <img class="img-detail-product" src={{ product.image_url.url }}/>
@@ -12,7 +13,7 @@
             <p>{{product.descount}} % </p>
         {% endif %}
     </div>
-    <a href="#">Agregar al carrito</a>
+    <a href="{% url 'add' product.id %}">Agregar al carrito</a>
 
 </main>
 
