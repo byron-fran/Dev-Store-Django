@@ -3,9 +3,11 @@
 {% block content%}
 {% load static %}
 {% include 'navbar.html' %}
+
 <main class="container-detail">
     <div class="card-detail-product">
-        <img class="img-detail-product" src={{ product.image_url.url }}/>
+ 
+        <img class="img-detail-product" src={{ product.image_url.url}} alt={{product.image_url}}/>
         <p>{{ product.price }} </p>
         <p>{{ product.name }}</p>
         <p class="description">{{ product.description }}</p>

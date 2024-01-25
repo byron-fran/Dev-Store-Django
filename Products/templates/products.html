@@ -14,6 +14,7 @@
     <div class="card-product">
         <a href="{% url 'product' product.id %}">
             <p>{{ product.name }}</p>
+            <p>{{ product.image_url.url }}</p>
             <img class='img-product' src={{ product.image_url.url}} alt="image-product"/>
             <p class="text-product">{{ product.price }}</p>
             {% if product.descount > 0 %}
