@@ -3,6 +3,25 @@
 {% block content%}
 {% load static %}
 {% include 'navbar.html' %}
-<h1>Desde el cart</h1>
-
+<main>
+    <div class='order__list'>
+        {% for order in orders %}
+            <div class='order__card'>
+                <div>
+                    <div>
+                        <img class="order__img" src={{order.image_url.url}} alt="img-product"/>
+                        <div>
+                            <p>{{ order.name }}</p>
+                            <p>{{ order.price }}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="{% url 'remove_from_cart' pk=order.id %}">X</a>
+                    </div>
+                <div>
+            </div>
+            
+        {% endfor %}
+    </div>
+</main>
 {% endblock %}

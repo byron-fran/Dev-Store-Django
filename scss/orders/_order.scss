@@ -1,0 +1,14 @@
+.order__list {
+    display:  flex;
+}
+
+.order__card {
+    display : flex;
+        background: red;
+  
+}
+.order__img {
+    width : 100px;
+    height : 100px;
+    object-fit: contain;
+}

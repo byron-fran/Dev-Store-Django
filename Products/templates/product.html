@@ -8,12 +8,12 @@
         <img class="img-detail-product" src={{ product.image_url.url }}/>
         <p>{{ product.price }} </p>
         <p>{{ product.name }}</p>
-        <p>{{ product.description }}</p>
+        <p class="description">{{ product.description }}</p>
         {% if product.descount > 0 %}
             <p>{{product.descount}} % </p>
         {% endif %}
     </div>
-    <a href="{% url 'add' product.id %}">Agregar al carrito</a>
+    <a href="{% url 'add_to_cart' product.id %}">Agregar al carrito</a>
 
 </main>
 
