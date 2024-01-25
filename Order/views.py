@@ -29,6 +29,7 @@ def remove_from_cart(request, pk):
     return redirect('cart')
 
 class ListOrdersView(LoginRequiredMixin, ListView):
+    login_url = '/login/'
     template_name = 'cart.html'
     context_object_name = 'orders'
     model = Order

@@ -5,9 +5,8 @@ from django.shortcuts import get_list_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ProducstListView(LoginRequiredMixin,ListView):
+class ProducstListView(ListView):
     model = Product
-    login_url = '/login/'
     redirect_field_name = 'login'
     context_object_name = 'products'
     paginate_by= 3
