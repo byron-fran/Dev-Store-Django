@@ -1,7 +1,6 @@
 from django.db import models
 import uuid
-from dotenv import load_dotenv
-load_dotenv()
+import django_filters
 
 class Category(models.Model):
     name = models.CharField(max_length=200, )
@@ -38,6 +37,6 @@ class Product (models.Model):
         return f"{self.name} - {self.price}" 
     
     class Meta:
-        ordering = ['-stock']
+        ordering = ['-stock', '-price']
 
 
