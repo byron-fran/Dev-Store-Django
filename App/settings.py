@@ -46,11 +46,14 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'bootstrap5',
+    'django_bootstrap_icons',
     'django_filters',
     'Auth.apps.AuthConfig',
     'base',
     'Products.apps.ProductsConfig',
-    'Order'
+    'Order',
+    'reviews'
 ]
 
 MIDDLEWARE = [

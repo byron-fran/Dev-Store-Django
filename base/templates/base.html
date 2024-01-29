@@ -9,9 +9,10 @@
     <meta name="author" content="">
 
     {% load static %}
-
-    <link href="{% static 'css/App.css' %}" rel="stylesheet">
-
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load bootstrap_icons %}
   </head>
 
   <body>
@@ -20,5 +21,5 @@
     {% endblock %}
 
   </body>
-
+  
 </html>

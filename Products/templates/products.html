@@ -4,32 +4,38 @@
 {% load static %}
 {% include 'navbar.html' %}
 
-<main class='container'>
-    
-        {% if request.username%}
-            <h1>Hello, {{request.username}}</h1>
-        {% endif %}
-    
-    {% for product in products %}
-    <div class="card-product">
-        <a href="{% url 'product' product.id %}">
+<main class='container text-center'>
+
+    {% if request.username%}
+    <h1>Hello, {{request.username}}</h1>
+    {% endif %}
+    <!--  -->
+    <div class="row ">
+        {% for product in products %}
+        <div class="col-sm-4 ">
+
             <p>{{ product.name }}</p>
-            <img class='img-product' src={{ product.image_url.url}} alt="image-product"/>
+            <a href="{% url 'product' product.id %}">
+                <img class='img-fluid img-thumbnail' src={{ product.image_url.url}} alt="image-product" />
+            </a>
             <p class="text-product">{{ product.price }}</p>
             {% if product.descount > 0 %}
             <p>{{product.descount}} % </p>
             {% endif %}
-        </a> 
+            <button class="btn btn-primary">Ver</button>
+        </div>
+
+        {% endfor %}
     </div>
-    {% endfor %}
+
 
 
 </main>
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -37,8 +43,8 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
