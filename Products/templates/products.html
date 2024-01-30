@@ -4,42 +4,46 @@
 {% load static %}
 {% include 'navbar.html' %}
 
-<main class='container text-center'>
+{% if request.username%}
+<h1>Hello, {{request.username}}</h1>
+{% endif %}
+<!--  -->
 
-    {% if request.username%}
-    <h1>Hello, {{request.username}}</h1>
-    {% endif %}
-    <!--  -->
-    <div class="row ">
-        {% for product in products %}
-        <div class="col-sm-4 ">
+<div class="row ">
+    {% for product in all_products %}
+    <div class="col-sm-4 ">
 
-            <p>{{ product.name }}</p>
-            <a href="{% url 'product' product.id %}">
-                <img class='img-fluid img-thumbnail' src={{ product.image_url.url}} alt="image-product" />
-            </a>
-            <p class="text-product">{{ product.price }}</p>
-            {% if product.descount > 0 %}
-            <p>{{product.descount}} % </p>
-            {% endif %}
-            <button class="btn btn-primary">Ver</button>
-        </div>
+        <p>{{ product.name }}</p>
+        <a href="{% url 'product' product.id %}">
+            <img class='img-fluid' src={{ product.image_url.url }} alt="image-product" />
+        </a>
+        <p class="text-product">{{ product.price }}</p>
+        {% if product.descount > 0 %}
+        <p>{{product.descount}} % </p>
+        {% endif %}
 
-        {% endfor %}
     </div>
 
-
-
-</main>
+    {% endfor %}
+</div>
+<div>
+    <form method="get">
+        <p><b>Price:</b>{{filters.form.price }}</p>
+        <p><b>Mark:</b>{{filters.form.category }}</p>
+        <p><b>Category:</b>{{filters.form.mark }}</p>
+        <button class="btn" type="submit">Search</button>
+    </form>
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      
+        <a href="?page={{ page_obj.previous_page_number }}">Back</a>
         {% endif %}
-
+      
         <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          {% for page in paginator.page_range %}
+            <a href="?page={{page}}">{{ page }}</a>
+           {% endfor %} 
         </span>
 
         {% if page_obj.has_next %}
