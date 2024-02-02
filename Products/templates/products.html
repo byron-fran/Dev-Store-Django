@@ -26,6 +26,7 @@
 
     {% endfor %}
 </div>
+
 <div>
     <form method="get">
         <p><b>Price:</b>{{filters.form.price }}</p>
@@ -33,23 +34,27 @@
         <p><b>Category:</b>{{filters.form.mark }}</p>
         <button class="btn" type="submit">Search</button>
     </form>
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-      
-        <a href="?page={{ page_obj.previous_page_number }}">Back</a>
-        {% endif %}
-      
-        <span class="current">
-          {% for page in paginator.page_range %}
-            <a href="?page={{page}}">{{ page }}</a>
-           {% endfor %} 
-        </span>
 
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    <div class="pagination">
+        <span class="step-links">
+            {% if paginator.has_previous %}
+               <a href="?page={{paginator.previous_page_number}}">previus</a>
+            {% endif %}
+    
+            <span class="current">
+                {% for page in total_pages%}
+                    {% if page_obj.number == page %}
+                        <span class="page-current">{{ page }}</span>
+                    {% else %}
+                        <a href="?page={{ page }}">{{ page }}</a>
+                    {% endif %}
+                {% endfor %}
+            </span>
+    
+            {% if next_page_number is not None %}
+            <a href="?page={{ next_page_number }}">Next</a>
+            <a href="?page={{ num_pages }}">Last &raquo;</a>
         {% endif %}
-    </span>
-</div>
+    </div>
+    
 {% endblock %}
