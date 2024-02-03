@@ -17,15 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.shortcuts import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Products.urls')),
-    path('', include('Auth.urls') ),
+    path('accounts/', include('Auth.urls') ),
+    path('accounts/', include('allauth.urls')),
     path('', include('base.urls')),
     path('', include('Order.urls')),
-    path('accounts/', include('allauth.urls')),
-   
 ]
 
 

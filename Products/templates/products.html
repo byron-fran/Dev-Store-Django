@@ -1,61 +1,69 @@
 {% extends "base.html" %}
-
 {% block content%}
 {% load static %}
 {% include 'navbar.html' %}
 
-{% if request.username%}
-<h1>Hello, {{request.username}}</h1>
-{% endif %}
-<!--  -->
-
-<div class="row ">
-    {% for product in all_products %}
-    <div class="col-sm-4  ">
-
-        <p>{{ product.name }}</p>
-        <a href="{% url 'product' product.id %}">
-            <img class="img-fluid" src={{ product.image_url.url }} alt="image-product" />
-        </a>
-        <p class="text-product">{{ product.price }}</p>
-        {% if product.descount > 0 %}
-        <p id='price'>{{product.descount}} % </p>
-        {% endif %}
-
-    </div>
-
-    {% endfor %}
-</div>
-
-<div>
-    <form method="get">
+<div class="row row-cols-1 row-cols-2-md">
+    {% comment %} form filters {% endcomment %}
+    <form method="get" class="col-4 border-end shadow-sm">
         <p><b>Price:</b>{{filters.form.price }}</p>
         <p><b>Mark:</b>{{filters.form.category }}</p>
-        <p><b>Categor
-            y:</b>{{filters.form.mark }}</p>
-        <button class="btn" type="submit">Search</button>
+        <p><b>Category:</b>{{filters.form.mark }}</p>
+        <button class="btn" type="submit">Filter</button>
     </form>
+    {% comment %} products container {% endcomment %}
+   <div class="col-8 row mt-4 ">
+    {% if all_products|length > 0 %}
 
-    <div class="pagination">
-        <span class="step-links">
-            {% if paginator.has_previous %}
-               <a href="?page={{paginator.previous_page_number}}">previus</a>
-            {% endif %}
+        {% for product in all_products %}
     
-            <span class="current">
-                {% for page in total_pages%}
-                    {% if page_obj.number == page %}
-                        <span class="page-current">{{ page }}</span>
-                    {% else %}
-                        <a href="?page={{ page }}">{{ page }}</a>
-                    {% endif %}
-                {% endfor %}
-            </span>
-    
-            {% if next_page_number is not None %}
-            <a href="?page={{ next_page_number }}">Next</a>
-            <a href="?page={{ num_pages }}">Last &raquo;</a>
-        {% endif %}
+            <div class="col">
+                <p>{{ product.name }}</p>
+                <a href="{% url 'product' product.id %}">
+                    <img style="width: 150px; height: 150px;object-fit:contain;" class="img-fluid object-fit-contain" src={{ product.image_url.url }} alt="image-product" />
+                </a>
+                <p class="text-product">{{ product.price }}</p>
+                {% if product.descount > 0 %}
+                <p id='price'>{{product.descount}} % </p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1 class="text-center">Empty</h1>
+    {% endif %}
     </div>
+</div>
+
+{% comment %} pagination {% endcomment %}
+{% if all_products|length > 0 %}
+<nav aria-label="Page navigation example w-100 ">
+    <ul class="pagination justify-content-center  w-100 ">
+        {% if paginator.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ paginator.previous_page_number}}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+ 
+      {% for page in total_pages %}
+        <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+      {% endfor %}
+      {% if next_page_number is not None%}
+        <li class="page-item">
+          <a class="page-link"  href="?page={{ next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        <li class="page-item " >
+            <a  class="page-link"   href="?page={{ num_pages }}" aria-label="Next">
+              <span aria-hidden="true" >Last</span>
+            </a>
+          </li>
+      {% endif %}
+  
+    </ul>
+</nav>    
+{%endif %}
        <script src="{% static './js/app.js'%}"></script>
 {% endblock %}

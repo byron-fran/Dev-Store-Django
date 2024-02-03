@@ -195,3 +195,7 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+AUTHENTICATION_CLASSES = [
+    'Auth.forms.CustomAuthLogin',
+    # Otros valores de AUTHENTICATION_CLASSES si los tienes
+]
