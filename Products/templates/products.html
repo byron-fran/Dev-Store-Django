@@ -11,15 +11,15 @@
 
 <div class="row ">
     {% for product in all_products %}
-    <div class="col-sm-4 ">
+    <div class="col-sm-4  ">
 
         <p>{{ product.name }}</p>
         <a href="{% url 'product' product.id %}">
-            <img class='img-fluid' src={{ product.image_url.url }} alt="image-product" />
+            <img class="img-fluid" src={{ product.image_url.url }} alt="image-product" />
         </a>
         <p class="text-product">{{ product.price }}</p>
         {% if product.descount > 0 %}
-        <p>{{product.descount}} % </p>
+        <p id='price'>{{product.descount}} % </p>
         {% endif %}
 
     </div>
@@ -31,7 +31,8 @@
     <form method="get">
         <p><b>Price:</b>{{filters.form.price }}</p>
         <p><b>Mark:</b>{{filters.form.category }}</p>
-        <p><b>Category:</b>{{filters.form.mark }}</p>
+        <p><b>Categor
+            y:</b>{{filters.form.mark }}</p>
         <button class="btn" type="submit">Search</button>
     </form>
 
@@ -56,5 +57,5 @@
             <a href="?page={{ num_pages }}">Last &raquo;</a>
         {% endif %}
     </div>
-    
+       <script src="{% static './js/app.js'%}"></script>
 {% endblock %}

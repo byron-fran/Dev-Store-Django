@@ -7,7 +7,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import redirect
-from .forms import UserForm
+from .forms import UserForm, UserFormLogin
 # Create your views here.
 
 #register view
@@ -34,15 +34,10 @@ class RegisterView(UserPassesTestMixin, FormView):
 class LoginViewUser(LoginView):
     template_name = 'login.html'
     redirect_authenticated_user = True
-    
+
     def get_success_url(self) -> str:
         return reverse_lazy('products')
     
-    # def form_valid(self, form):
-    #     response = super().form_invalid(form)
-    #     if self.request.user.is_authenticated:
-    #         return  self.get_success_url()
-    #     return response
 
 
 #Logout    

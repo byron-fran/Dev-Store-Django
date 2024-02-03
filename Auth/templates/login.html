@@ -2,14 +2,25 @@
 
 {% block content %}
 {% load static %}
-<main>
-    <form method="POST">
+ {% load socialaccount %}
+<main class="container w-100 d-flex justify-content-center align-items-center vh-100">
+    <form method="POST" class="w-50 shadow-sm rounded-1 border border-secondary-subtle p-4">
         {% csrf_token %}
-        {{form}}
-        <button class='btn' type="submit">Login</button>
-        <a href="{% url 'register' %}">Don't you have an account ?</a>
+        <label class="mt-2 mb-2">{{ form.username.label }}</label>
+        {{form.username}}
+        <label class="mt-2 mb-2">{{ form.password.label }}</label>
+        {{form.password}}
+        
+        <button class='btn btn-primary w-100 mt-4' id="btn-login" type="submit">Login</button>
+        <div class="d-flex justify-content-around mt-2">
+          <a href="{% provider_login_url 'google'%}?next=/">Login with Google</a>
+        </div>
+        <div class="d-flex justify-content-around mt-2">
+            <a href="{% url 'register' %}">Don't you have an account ?</a>
+            <a href="#">Forgot your password</a>
+        </div>
     </form>
    
- 
+
 </main>
 {% endblock %}

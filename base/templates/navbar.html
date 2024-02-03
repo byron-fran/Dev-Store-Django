@@ -46,7 +46,11 @@
             </svg>
           </a>
           <ul class="dropdown-menu ">
-            <li><a class="dropdown-item" href="#">Action</a></li>
+            {% if request.user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+            {% endif %}
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li>
               <hr class="dropdown-divider">

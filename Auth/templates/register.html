@@ -2,14 +2,21 @@
 
 {% block content %}
 {% load static %}
-<main>
-    <form method="POST">
+<main class="container w-100 d-flex justify-content-center align-items-center vh-100">
+    <form method="POST" class="w-50 shadow-sm rounded-1 border border-secondary-subtle p-4">
         {% csrf_token %}
-        {{form}}
-        <button class='btn' type="submit">Register</button>
-        <div>
+        <label class="mt-2 mb-2">{{ form.username.label }}</label>
+        {{form.username}}
+        <label class="mt-2 mb-2">{{ form.email.label }}</label>
+        {{form.email}}
+        <label class="mt-2 mb-2">{{ form.password1.label }}</label>
+        {{form.password1}}
+        <label class="mt-2 mb-2">{{ form.password2.label }}</label>
+       
+        {{form.password2}}
+        <button class='btn btn-primary w-100 mt-4' type="submit">Register</button>
+        <div class="d-flex justify-content-center mt-2">
             <a href="{% url 'login' %}">Do you have an account ?</a>
-            <a href="#">Forgot your password</a>
         </div>
     </form>
    
