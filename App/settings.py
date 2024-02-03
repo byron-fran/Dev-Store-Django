@@ -102,11 +102,11 @@ WSGI_APPLICATION = 'App.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'VogueVault',
-        'USER': 'root',
-        'PASSWORD': 'byron',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -184,6 +184,14 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         'AUTH_PARAMS': {
             'access_type':'online',
+        }
+    },
+    "github": {
+        "APP": {
+            "client_id": env('GIT_HUB_CLIENT_ID'),
+            "secret": env('GIT_HUB_CLIENT_SECRET'),
+            "key": "",
+    
         }
     }
 }
