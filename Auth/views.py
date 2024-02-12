@@ -9,7 +9,12 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import redirect
 from .forms import UserForm
-
+from django.contrib.auth.views import (
+                                        PasswordResetView, 
+                                        PasswordResetDoneView, 
+                                        PasswordResetCompleteView,
+                                        PasswordResetConfirmView
+                                    )
 
 #register view
 class RegisterView(UserPassesTestMixin, FormView):
@@ -31,13 +36,23 @@ class RegisterView(UserPassesTestMixin, FormView):
     def get_success_url(self) -> str:
         return reverse_lazy('products')
 
+
 #Logout    
 def logout_view(request):
     logout(request)
     return redirect('account_login')
     
-  
-    
-    
-      
+
+class ResetPassword(PasswordResetView):
+    template_name = 'reset_password.html'
+
+class PasswordResetDone(PasswordResetDoneView):    
+   template_name = 'reset_password_done.html' 
+
+class PasswordRestConfirm(PasswordResetConfirmView):
+    template_name = 'password_confirm.html'
+
+class PasswordResetComplete(PasswordResetCompleteView):
+    template_name = 'password_complete.html'    
+
     

@@ -9,11 +9,12 @@ from .filters import ProductFilter
 from django.shortcuts import render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
+
 class ProductsListView(ListView):
     model = Product
     template_name = 'products.html'
     context_object_name = 'all_products'
-    paginate_by = 3
+    paginate_by = 9
 
     def get_queryset(self):
           queryset = Product.objects.order_by('name')

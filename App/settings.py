@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    'Products.templatetags.custom_filters'
    
 ]
 
@@ -84,9 +85,9 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
                 
             ],
         },
@@ -197,5 +198,22 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 AUTHENTICATION_CLASSES = [
     'Auth.forms.CustomAuthLogin',
-    # Otros valores de AUTHENTICATION_CLASSES si los tienes
+
 ]
+
+
+#email
+#email
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+else:
+    # production
+    pass    
+#email
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ''
