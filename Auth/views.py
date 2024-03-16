@@ -18,7 +18,7 @@ from django.contrib.auth.views import (
 
 #register view
 class RegisterView(UserPassesTestMixin, FormView):
-    template_name = 'register.html'
+    template_name = 'registration/register.html'
     form_class = UserForm
     redirect_authenticated_user = True
     login_url = reverse_lazy('products')  # Redirige a 'products' si el usuario está autenticado
@@ -35,6 +35,7 @@ class RegisterView(UserPassesTestMixin, FormView):
 
     def get_success_url(self) -> str:
         return reverse_lazy('products')
+
 
 
 #Logout    

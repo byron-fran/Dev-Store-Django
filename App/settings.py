@@ -43,13 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'django.contrib.messages',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
+    'cloudinary_storage',
     'cloudinary',
-    'bootstrap5',
-    'django_bootstrap_icons',
-    'django_filters',
+    # 'django_filters',
     'Auth.apps.AuthConfig',
     'base',
     'Products.apps.ProductsConfig',
@@ -73,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'App.urls'
@@ -108,6 +110,7 @@ DATABASES = {
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
+        
     }
 }
 
@@ -196,20 +199,33 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-AUTHENTICATION_CLASSES = [
-    'Auth.forms.CustomAuthLogin',
+# AUTHENTICATION_CLASSES = [
 
+#     'Auth.forms.CustomAuthLogin',
+#     ''
+
+# ]
+
+AUTH_USER_MODEL = 'Auth.User'
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 
+TAILWIND_APP_NAME = 'theme'
 
-#email
+NPM_BIN_PATH = 'npm.cmd'
+
+# AUTH_USER_MODEL = 'Auth.User'
+APPEND_SLASH=False
+
 #email
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 else:
     # production
-    pass    
 #email
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'

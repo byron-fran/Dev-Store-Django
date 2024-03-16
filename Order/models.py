@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from Auth.models import User
 from Products.models import Product
 
 # Create your models here.
@@ -34,6 +34,8 @@ class Order(models.Model):
         ordering = ['-name']
         verbose_name='order'
         verbose_name_plural='orders'
+        db_table='Orders'
+
     def __str__(self):
         return self.name
     

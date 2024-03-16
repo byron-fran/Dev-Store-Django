@@ -1,58 +1,42 @@
 #import a list view
 from typing import Any
 from django.db.models.base import Model as Model
-from django.views.generic import ListView, DetailView, CreateView, TemplateView
-from .models import Product
-from django.shortcuts import get_list_or_404, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .filters import ProductFilter
+from django.db.models.query import QuerySet
 from django.shortcuts import render
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.generic import ListView, DetailView,FormView, TemplateView
+from .models import Product
+from .forms import ProductFilterForm
+from .models import Mark
 
-
-class ProductsListView(ListView):
+class ProductsListView(TemplateView):
+    
     model = Product
     template_name = 'products.html'
-    context_object_name = 'all_products'
-    paginate_by = 9
-
-    def get_queryset(self):
-          queryset = Product.objects.order_by('name')
-          all_filters = ProductFilter(self.request.GET, queryset=queryset)
-          filtered_products = all_filters.qs
-          return filtered_products
-
+ 
+    
+    def get_queryset(self) -> QuerySet[Any]:
+        return Product.objects.get_all_products()
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        all_filters = ProductFilter(self.request.GET, queryset=self.get_queryset())
+            context = super().get_context_data(**kwargs)
+            context['all_products'] = Product.objects.get_all_products()
+            context['form'] = ProductFilterForm()
+            context['marks'] = Mark.objects.all()
+            return context
+    
+    def post(self, request, *args, **kwargs):
+        form = ProductFilterForm(request.POST)
+        if form.is_valid():
+            print(request.POST)
+            # Tu lógica de filtrado aquí
+            # Actualiza context['product_list'] con los resultados filtrados
+            # Puedes utilizar form.cleaned_data para obtener los datos del formulario
+            pass
+        else:
+            # El formulario no es válido, puedes manejar los errores aquí
+            pass
 
-        try:
-            paginated_data = self.paginate_queryset(all_filters.qs, self.paginate_by)
-            context['page_obj'] = paginated_data[0]
-            context['has_previous'] = paginated_data[1].has_previous()
-            context['next_page_number'] = paginated_data[1].next_page_number() if paginated_data[1].has_next() else None
-            context['num_pages'] = paginated_data[1].paginator.num_pages
-            context['total_pages'] = paginated_data[1].paginator.page_range
-            context['filters'] = all_filters
-            print(context['has_previous'])
-     
-        except PageNotAnInteger:
-            paginated_data = self.paginate_queryset(all_filters.qs, 1)
-            context['page_obj'] = paginated_data[0]
-            context['has_previous'] = paginated_data[1].has_previous()
-            context['next_page_number'] = paginated_data[1].next_page_number() if paginated_data[1].has_next() else None
-            context['num_pages'] = paginated_data[1].paginator.num_pages
-            context['filters'] = all_filters
-        except EmptyPage:
-            paginated_data = self.paginate_queryset(all_filters.qs, self.paginate_by)
-            context['page_obj'] = paginated_data[0]
-            context['has_previous'] = paginated_data[1].has_previous()
-            context['next_page_number'] = paginated_data[1].next_page_number() if paginated_data[1].has_next() else None
-            context['num_pages'] = paginated_data[1].paginator.num_pages
-            context['filters'] = all_filters
-        context['paginator'] = paginated_data[1]  # Añade el paginator al contexto
+        return render(request, self.template_name, {'form': form, 'all_products': Product.objects.get_all_products()})
 
-        return context
 
 class ProductDetailView(DetailView):
     model = Product

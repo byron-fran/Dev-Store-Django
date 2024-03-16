@@ -3,71 +3,48 @@
 {% load static %}
 {% include 'navbar.html' %}
 
-<div class="row row-cols-1 row-cols-2-md">
-    {% comment %} form filters {% endcomment %}
-    <form method="get" class="col-md-2 col-12 border-end shadow-end-sm mt-4">
-        <label class="text-center" for="mark">Mark</label>
-        <select class="form-control mt-2" id="mark" value={{ filters.form.mark}} 
-        <label class="text-center" for="category">Category</label>
-        <select class="form-control mt-2" id="category" value={{ filters.form.category }} 
-        <button class="btn btn-primary w-100 mt-4" type="submit" >Filter</button>
-    </form>
-    {% comment %} products container {% endcomment %}
-    <div class="container col-10 ">
-         <div class=" row mt-4 row-cols-1 row-cols-sm-2 row-cols-md-3 mx-auto ">
-        {% if all_products|length > 0 %}
-        {% for product in all_products %}
-            <div class="col d-flex flex-column border mt-4" >
-              
-                <p class="text-center">{{ product.name }}</p>
-                <a class="mx-auto" href="{% url 'product' product.id %}">
-                    <img style="width: 100px; height: 100px;object-fit:contain;" class="mx-auto" src={{ product.image_url.url }} alt="image-product" />
-                </a>
-                <p class="text-center">{{ product.price }}</p>
-                {% if product.descount > 0 %}
-                <p id='price' class="text-center">{{product.descount}} % </p>
-                {% endif %}
-            </div>
-        {% endfor %}
-      {% else %}
-        <h1 class="text-center">Empty</h1>
-      {% endif %}
-      </div>
-      {% comment %} pagination {% endcomment %}
-      {% if all_products|length > 0 %}
-      <nav aria-label="Page navigation example w-100 mt-4 ">
-          <ul class="pagination justify-content-center  w-100 mt-4 ">
-              {% if paginator.has_previous %}
-              <li class="page-item">
-                  <a class="page-link" href="?page={{ paginator.previous_page_number}}" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                  </a>
-              </li>
-              {% endif %}
-            
-            {% for page in total_pages %}
-              <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+<main class="h-full">
+
+  <div class="grid md:grid-cols-5 h-[100%]">
+    <aside class="bg-blue-900 p-4 md:col-span-1 w-full h-full">
+      <form method="POST"> 
+        
+        {% csrf_token %}
+        {{ form }}
+       
+        <button type="submit">Filter</button>
+      </form>
+      <form method="POST"> 
+        
+        {% csrf_token %}
+          <option>
+
+            {% for mark in marks %}
+              <select value={{ mark }}> {{ mark }}</select>
             {% endfor %}
-            {% if next_page_number is not None%}
-              <li class="page-item">
-                <a class="page-link"  href="?page={{ next_page_number }}" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-              <li class="page-item " >
-                  <a  class="page-link"   href="?page={{ num_pages }}" aria-label="Next">
-                    <span aria-hidden="true" >Last</span>
-                  </a>
-                </li>
-            {% endif %}
-              
-          </ul>
-      </nav>    
-      {%endif %}
-    </div>
+          </option>
+       
+        <button type="submit">Filter</button>
+      </form>
+ 
+    </aside>
+    <ul class="grid md:gap-4 md:grid-cols-3 md:col-span-4 md:w-[90%] mx-auto " >
+       {% for product in all_products %} 
+         <li class="shadow-md p-4 rounded-md my-10">
+           <img class="w-[90%] md:w-[200px] mx-auto" src={{ product.image_url.url }} alt={{ product.name }}/>
+           <p class="text-center text-blue-900 font-bold mt-2 ">
+              {{ product.name }} 
+              <span class="bg-blue-900 text-white p-1 rounded-lg">
+                ${{ product.price }}
+              </span>
+            </p>
+          </li>
+       {% endfor %}
+     </ul> 
+  </div>
 
-</div>
 
-
-       <script src="{% static './js/app.js'%}"></script>
+    
+</main>
+<script src="{% static './js/app.js'%}"></script>
 {% endblock %}

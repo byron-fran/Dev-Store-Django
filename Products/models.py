@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-import django_filters
+from .managers import ProductsManager
 
 class Category(models.Model):
     name = models.CharField(max_length=200, )
@@ -9,6 +9,7 @@ class Category(models.Model):
         return self.name
     class Meta:
         ordering =  ['-name']
+        
     
 class Mark (models.Model):
     name = models.CharField(max_length=200)
@@ -17,22 +18,9 @@ class Mark (models.Model):
         return self.name
     class Meta:
         ordering =  ['-name']
+        db_table='marks'
         
 class Product (models.Model):
-    SIZE_CHOICES = [
-        ('S', 'Small'),
-        ('M', 'Medium'),
-        ('L', 'Large'),
-        ('XL', 'Extra Large'),
-    ]
-    COLOR_CHOICES = [
-        ('red', 'Red'),
-        ('blue', 'Blue'),
-        ('green', 'Green'),
-        ('black', 'Black'),
-       
-    ]
-
 
     id = models.UUIDField(
         primary_key = True, 
@@ -47,13 +35,16 @@ class Product (models.Model):
     descount = models.FloatField()
     mark = models.ForeignKey(Mark, on_delete=models.CASCADE, null=True,blank=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=False)
-    color = models.CharField(max_length=10, choices=COLOR_CHOICES, default='black')
-    size = models.CharField(max_length=2, choices=SIZE_CHOICES, default='M')
+    slug = models.SlugField(null=True, blank=True)
+    # field for manager
+    objects = ProductsManager()
+    
     def __str__(self):
         return f"{self.name} - {self.price}" 
     
     class Meta:
         ordering = ['-stock', '-price']
+        db_table= 'products'
 
 
  

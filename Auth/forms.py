@@ -1,6 +1,6 @@
 from typing import Any
 from django import forms
-from django.contrib.auth.models import User
+from .models import User
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 
 class UserForm(UserCreationForm):
@@ -50,8 +50,8 @@ class EmailForm(forms.ModelForm):
 class CustomAuthLogin(AuthenticationForm):
 
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'w-full rounded-md border border-slate-300'})
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'w-full rounded-md border border-slate-300'})
     )
