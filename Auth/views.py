@@ -21,7 +21,7 @@ class RegisterView(UserPassesTestMixin, FormView):
     template_name = 'registration/register.html'
     form_class = UserForm
     redirect_authenticated_user = True
-    login_url = reverse_lazy('products')  # Redirige a 'products' si el usuario está autenticado
+    login_url = reverse_lazy('product:list_products')  # Redirige a 'products' si el usuario está autenticado
 
     def test_func(self):
   
@@ -34,7 +34,7 @@ class RegisterView(UserPassesTestMixin, FormView):
         return super(RegisterView, self).form_valid(form)
 
     def get_success_url(self) -> str:
-        return reverse_lazy('products')
+        return reverse_lazy('product:list_products')
 
 
 

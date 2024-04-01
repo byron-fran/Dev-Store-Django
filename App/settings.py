@@ -160,7 +160,7 @@ SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-CCOUNT_EMAIL_VERIFICATION = 'none'
+ACOUNT_EMAIL_VERIFICATION = 'none'
 # Media files
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

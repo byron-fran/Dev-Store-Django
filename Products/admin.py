@@ -6,6 +6,8 @@ from .models import Product, Mark, Category
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'stock', 'image_url', 'descount')
     list_filter = ['category', 'mark', 'price']
+    prepopulated_fields = {'slug': ('name', )}
+    
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name']
 

@@ -3,60 +3,43 @@
 {% load static %}
 {% include 'navbar.html' %}
 {% load custom_filters %}
-<main class="container">
-    <div class="mx-auto row mt-4 align-items-center">
-        <div class=" col-12 col-sm">
-            <img class="img-fluid rounded mx-auto d-block" style="width: 300px; height : 300px; object-fit: contain;" src={{ product.image_url.url }} alt={{product.image_url}} />
+
+<main class="w-full">
+    <section class="grid md:grid-cols-2 justify-center mt-20 w-[90%] mx-auto">
+        <div>
+            <img class="w-[90%] md:w-[400px] mx-auto" src={{ product.image_url.url}} alt={{product.name}}/>
         </div>
-        <div class=" col-12 col-sm">
-            <p class="fs-1">{{ product.name }}</p>
-            <p style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 10; overflow: hidden;">
-                {{ product.description }}</p>
-            {% if product.descount > 0 %}
-            <p>{{product.descount}} % </p>
-            {% endif %}
-            <div class="row justify-content-between align-items-end mt-4">
-                <p class="fs-2 text-info fw-bold ">${{ product.price }} </p>
+        <div class="flex flex-col border border-gray-200 rounded-sm p-4">
+            <h1 class=" font-extrabold text-2xl uppercase block ">{{product.name}}</h1>
+            <p class="mt-10">{{ product.description }}</p>
+            <div class="flex mt-4 items-center gap-4">
+                {% if product.stock > 0 %}
+                <p class="text-blue-800 font-bold ">Quantity</p>
+                {% endif %}
+                
+                <select class=" border border-gray-200 rounded-md w-[50%]">
+                    {% for n in product.stock|add:1|get_range %}
+                    <option value="{{ n }}">{{ n  }}</option>
+                {% endfor %}
+
+                </select>
             </div>
-            {{product.color}}
+            <div>
 
-            <!-- div for quantity and add to cart -->
-            <div class="row justify-content-between align-items-end ">
-                <div class="col ">
-                    {% if product.stock > 0 %}
-                    <p class="m-0">Quantity</p>
-                    {% endif %}
-                    <select class="d-inline-flex w-100 focus-ring focus-ring-primary py-2 rounded-2">
-                        {% for n in product.stock|add:1|get_range %}
-                        <option value="{{ n }}">{{ n }}</option>
-                    {% endfor %}
+          
+                {% if request.user.is_authenticated %}
+                    <a 
+                        class="bg-blue-800 hover:bg-blue-900 cursor-pointer p-2 rounded-md block text-white text-center font-extrabold mt-4 uppercase ">Add to cart
+                    </a>
+                {% else %} 
+                <a href={% url 'account_login'  %}
+                    class="bg-blue-800 hover:bg-blue-900 cursor-pointer p-2 rounded-md block text-white text-center font-extrabold mt-4 uppercase ">Add to cart
+                </a>
+                {% endif %}
 
-                    </select>
-                </div>
-                 {% if request.user.is_authenticated %}
-                    <a class="bg-primary col text-center fs-6 text-white p-2 text-decoration-none rounded-2 "
-                        href="{% url 'add_to_cart' product.id %}">
-                    <svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" fill="currentColor" class="bi bi-cart-fill mb-1 me-1" viewBox="0 0 16 16">
-                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                    </svg>Add to cart</a>
-                  {% else %}
-                        <a class="bg-primary col text-center fs-6 text-white p-2 text-decoration-none rounded-2 "
-                            href="{% url 'account_login' %}?next=/product/{{product.id}}">
-                        <svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" fill="currentColor" class="bi bi-cart-fill mb-1 me-1" viewBox="0 0 16 16">
-                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                        </svg>Add to cart</a>
-                 {% endif %}
-         
             </div>
-
         </div>
-
-
-    </div>
-
-
-
-
+    </setcion>
 </main>
 
 {% endblock %}
