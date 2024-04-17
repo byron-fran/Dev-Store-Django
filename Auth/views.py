@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .models import User
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth import login
@@ -37,15 +36,17 @@ class RegisterView(UserPassesTestMixin, FormView):
 
     def get_success_url(self) -> str:
         return reverse_lazy('product:list_products')
-
-
-
-
-class LoginView(FormView):
+    
+# login view
+class LoginView(UserPassesTestMixin,FormView):
     template_name = 'registration/login.html'
     redirect_authenticated_user = True
     form_class = LoginForm
-
+    login_url = reverse_lazy('product:list_products')
+    
+    def test_func(self):
+        return not self.request.user.is_authenticated
+    
     def form_valid(self, form):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
