@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def add_to_cart(request, pk):
     
     product_found = Product.objects.get(id=pk)
-  
+    print(product_found)
     order, created = Order.objects.get_or_create(
         user=request.user,
         name=product_found.name,

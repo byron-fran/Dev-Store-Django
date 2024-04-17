@@ -6,6 +6,13 @@
 <main class="w-[95%] mx-auto flex justify-between items-center h-screen">
     
     <form method="POST" class="mx-auto p-4 rounded-md border border-slate-300">
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li class="text-red-500">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% csrf_token %}
         <label class="mt-2 mb-2 w-100">{{ form.username.label }}</label>
         {{form.username}}

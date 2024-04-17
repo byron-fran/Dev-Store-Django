@@ -1,25 +1,42 @@
 {% extends 'base.html' %}
-
 {% block content %}
 {% load static %}
+{% load socialaccount %}
 <main class="w-[95%] mx-auto flex justify-between items-center h-screen">
+    
     <form method="POST" class="mx-auto p-4 rounded-md border border-slate-300">
+        <p class="text-red-500">
+            {{ form.errors }}
+        </p>
+        
         {% csrf_token %}
-        <label class="mt-2 mb-2">{{ form.username.label }}</label>
+         {% comment %} field username {% endcomment %}
+        <label class="mt-2 mb-2 w-100">{{ form.username.label }}</label>
         {{form.username}}
-        <label class="mt-2 mb-2">{{ form.email.label }}</label>
-        {{form.email}}
-        <label class="mt-2 mb-2">{{ form.password1.label }}</label>
-        {{form.password1}}
-        <label class="mt-2 mb-2">{{ form.password2.label }}</label>
-       
-        {{form.password2}}
-        <button class='btn btn-primary w-100 mt-4' type="submit">Register</button>
-        <div class="d-flex justify-content-center mt-2">
-            <a href="{% url 'account_login' %}">Do you have an account ?</a>
+
+         {% comment %} field email {% endcomment %}
+        <label class="mt-2 mb-2 w-100">{{ form.email.label }}</label>
+        <div class="w-100">
+            {{form.email }}
+        </div>
+         {% comment %} field password 1 {% endcomment %}
+        <label class="mt-2 mb-2 w-100">{{ form.password1.label }}</label>
+        <div class="w-100">
+            {{form.password1 }}
+        </div>
+        {% comment %} field password 2 {% endcomment %}
+        <label class="mt-2 mb-2 w-100">{{ form.password2.label }}</label>
+        <div class="w-100">
+            {{form.password2 }}
+        </div>
+        
+        <button class='w-full bg-blue-800 p-2 rounded-md mt-4 text-white' id="btn-login" type="submit">Signup</button>
+
+        <div class="flex justify-around items-center ">
+            <a class="text-blue-500 text-[13px]" href="{% url 'auth:account_login' %}"> you have an account ?</a>
+            
         </div>
     </form>
-   
- 
+
 </main>
 {% endblock %}

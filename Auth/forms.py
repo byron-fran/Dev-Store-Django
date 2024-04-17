@@ -6,18 +6,18 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 class UserForm(UserCreationForm):
     email = forms.EmailField(
         label='Email',       
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'pedro@pedro.com'} ))
+        widget=forms.TextInput(attrs={'class': 'w-full rounded-md border border-slate-300', 'placeholder' : 'pedro@pedro.com'} ))
 
     password1 = forms.CharField(
         label="Password",
         strip=False,
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        widget=forms.PasswordInput(attrs={'class': 'w-full rounded-md border border-slate-300'}),
         
     )
 
     password2 = forms.CharField(
         label="Password confirmation",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        widget=forms.PasswordInput(attrs={'class': 'w-full rounded-md border border-slate-300'}),
         strip=False,
        
     )
@@ -26,7 +26,7 @@ class UserForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Write your name'}),
+            'username': forms.TextInput(attrs={'class': 'w-full rounded-md border border-slate-300', 'placeholder' : 'Write your name'}),
         }
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -44,14 +44,17 @@ class EmailForm(forms.ModelForm):
         if 'email' in self.changed_data:
             if User.objects.filter(email=email).exists():
                 raise forms.ValidationError('El email ya se encuentra registrado')
-        return email           
+        return email
+           
         
 
-class CustomAuthLogin(AuthenticationForm):
+class LoginForm(forms.Form):
 
     username = forms.CharField(
+       
         widget=forms.TextInput(attrs={'class': 'w-full rounded-md border border-slate-300'})
     )
     password = forms.CharField(
+                
         widget=forms.PasswordInput(attrs={'class': 'w-full rounded-md border border-slate-300'})
     )

@@ -7,7 +7,7 @@
 <main class="w-full">
     <section class="grid md:grid-cols-2 justify-center mt-20 w-[90%] mx-auto">
         <div>
-            <img class="w-[90%] md:w-[400px] mx-auto" src={{ product.image_url.url}} alt={{product.name}}/>
+            <img class="w-[90%] md:w-[400px] mx-auto" src={{ product.image_url.url }} alt={{product.name}}/>
         </div>
         <div class="flex flex-col border border-gray-200 rounded-sm p-4">
             <h1 class=" font-extrabold text-2xl uppercase block ">{{product.name}}</h1>
@@ -16,19 +16,21 @@
                 {% if product.stock > 0 %}
                 <p class="text-blue-800 font-bold ">Quantity</p>
                 {% endif %}
-                
-                <select class=" border border-gray-200 rounded-md w-[50%]">
-                    {% for n in product.stock|add:1|get_range %}
-                    <option value="{{ n }}">{{ n  }}</option>
-                {% endfor %}
+                <form method="POST">
 
-                </select>
+                    <select class=" border border-gray-200 rounded-md w-[50%]">
+                        {% for n in product.stock|add:1|get_range %}
+                        <option value="{{ n }}">{{ n  }}</option>
+                    {% endfor %}
+    
+                    </select>
+                </form>
             </div>
             <div>
 
           
                 {% if request.user.is_authenticated %}
-                    <a 
+                    <a href="{% url 'add_to_cart' product.id %}"
                         class="bg-blue-800 hover:bg-blue-900 cursor-pointer p-2 rounded-md block text-white text-center font-extrabold mt-4 uppercase ">Add to cart
                     </a>
                 {% else %} 
@@ -39,7 +41,8 @@
 
             </div>
         </div>
-    </setcion>
+    </section>
+    <script src="{% static 'App.js' %}"></script>
 </main>
 
 {% endblock %}

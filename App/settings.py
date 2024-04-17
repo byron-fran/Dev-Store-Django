@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'cloudinary_storage',
     'cloudinary',
-    # 'django_filters',
+    'django_filters',
     'Auth.apps.AuthConfig',
     'base',
     'Products.apps.ProductsConfig',
@@ -162,7 +162,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 ACOUNT_EMAIL_VERIFICATION = 'none'
 # Media files
-MEDIA_URL = '/media/'
+MEDIA_URL = '/dev_store/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #
@@ -174,7 +174,7 @@ CLOUDINARY_STORAGE = {
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
+    # 'allauth.account.auth_backends.AuthenticationBackend'
 ]
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
