@@ -3,40 +3,53 @@
 {% block content%}
 {% load static %}
 {% include 'navbar.html' %}
+{% load format_currency %}
+{% load calculate_quantity %}
+{% load calculate_price %}
+<main class="w-[90%] md:w-[70%] xl:w-[50%] mx-auto">
+   {% if orders|calculate_quantity %}
+   
+   <div class='flex flex-col mt-8 gap-4'>
+       
+       {% for order in orders %}
+           <div class="shadow-md p-4 flex gap-4 w-full">
+               <div class="">
+                   <img class="object-contain md:w-[100px] md:h-[100px]" src=" {{ order.image_url.url }} " alt=" {{ order.name}} " />
+               </div>
+               <div class="flex-1 w-full flex justify-between flex-row">
+                   <div>
+                       <p> {{ order.name  }}</p>
+                       <div class="flex gap-4">
+                           <p class="text-gray-700 "> {{ order.price|currency}} {{ ' ' }} X </p>
+                           <p class="text-gray-700"> {{ order.quantity }} </p>
+                       </div>
+                       <p class="text-indigo-600"> {{ order.total_price|currency}} </p>
+                   </div>
+                   
+                   <a href="{% url 'remove_from_cart' pk=order.id %}">
+                       <svg class="w-8 h-8 text-gray-700 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                         </svg>
+                   </a>
 
-
-<main class="w-[90%] md:w-[70%] mx-auto">
-    <div class='flex flex-col mt-8 gap-4'>
-        {% for order in orders %}
-            <div class="shadow-md p-4 flex gap-4">
-                <div class="">
-                    <img class="object-contain md:w-[100px] md:h-[100px]" src=" {{ order.image_url.url }} " alt=" {{ order.name}} " />
-                </div>
-
-                <div class="flex-1 w-full justify-between flex-row">
-                    <div>
-                        <p> {{ order.name  }}</p>
-                        <p> {{ order.price}} </p>
-                        <p> {{ order.total_price}} </p>
-                        <p >
-                           
-                            <span class="text-indigo-600 font-bold"> {{ order.quantity }} </span>
-                        </p>
-                    </div>
-                    
-                    <a href="{% url 'remove_from_cart' pk=order.id %}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
-                            class="bi bi-trash" viewBox="0 0 16 16">
-                            <path
-                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                            <path
-                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                        </svg>
-                    </a>
-
-                </div>
-            </div>
-        {% endfor %}
+               </div>
+           </div>
+       {% endfor %}
+   </div>
+   <p class="mt-4 text-[1.5rem]"> Total <span class="text-indigo-600">{{ orders|calulate_total_price|currency }}</span> </p>
+  
+   <a class="flex justify-center gap-4 text-center bg-indigo-800 hover:bg-indigo-900 hover:cursor-pointer  text-white p-3 w-full rounded-md font-bold text-1xl mt-10">
+       Checkout
+       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+       </svg>      
+   </a>
+   
+   {% else %}
+    <div class="flex flex-col mt-8 gap-4 justify-center w-full">
+        <p class="text-center font-bold text-2xl">Cart empty</p>
+          
     </div>
+   {% endif %}
 </main>
 {% endblock %}

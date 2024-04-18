@@ -36,11 +36,19 @@
                 {% if request.user.is_authenticated %}
                     <button
                         type="submit"
-                        class="bg-indigo-800 w-full hover:bg-indigo-900 cursor-pointer p-2 rounded-md block text-white text-center font-extrabold mt-4 uppercase ">Add to cart
+                        class="bg-indigo-800 w-full hover:bg-indigo-900 cursor-pointer p-2 rounded-md flex  justify-center items-center gap-4 text-white text-center font-bold mt-4  ">Add to cart
+                        <svg class="w-6 h-6 text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
+                          </svg>
                     </button>
                 {% else %} 
                 <a href={% url 'account_login'  %}
-                    class="bg-indigo-800 hover:bg-indigo-900 cursor-pointer p-2 rounded-md block text-white text-center font-extrabold mt-4 uppercase ">Add to cart
+                    class="bg-indigo-800 hover:bg-indigo-900 cursor-pointer p-2 rounded-md block justify-center items-center gap-4 text-white text-center font-extrabold mt-4 uppercase ">
+                    Add to cart
+                    <svg class="w-8 h-8 text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
+                      </svg>
+                      
                 </a>
                 {% endif %}
 

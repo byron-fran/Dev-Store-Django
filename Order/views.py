@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-# Create your views here.
+# Function to create or update a order
 def add_to_cart(request, pk):
     product = get_object_or_404(Product, id=pk)
     quantity = int(request.POST.get('quantity'))
@@ -33,11 +33,13 @@ def add_to_cart(request, pk):
 
     return redirect('cart')
 
+# function to remove a order
 def remove_from_cart(request, pk):
     order = Order.objects.get(id=pk)
     order.delete()
     return redirect('cart')
 
+# lsit view to show cart list
 class ListOrdersView(LoginRequiredMixin, ListView):
     login_url = '/accounts/login'
     template_name = 'cart.html'
