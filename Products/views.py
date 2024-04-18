@@ -2,6 +2,8 @@
 from typing import Any
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
+from django.http import HttpRequest
+from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView,FormView, TemplateView
 from .models import Product
@@ -23,20 +25,17 @@ class ProductsListView(TemplateView):
             context['marks'] = Mark.objects.all()
             return context
     
-    def post(self, request, *args, **kwargs):
-        form = ProductFilterForm(request.POST)
-        if form.is_valid():
-            print(request.POST)
-            # Tu lógica de filtrado aquí
-            # Actualiza context['product_list'] con los resultados filtrados
-            # Puedes utilizar form.cleaned_data para obtener los datos del formulario
-            pass
-        else:
-            # El formulario no es válido, puedes manejar los errores aquí
-            pass
+    
+    def get(self, request: HttpRequest) -> HttpResponse:
+        q =  request.GET.get('q')
+        mark = request.GET.get('mark')
+        category = request.GET.get('category')
 
-        return render(request, self.template_name, {'form': form, 'all_products': Product.objects.get_all_products()})
-
+        if q:
+            products = Product.objects.products_search(q)
+            return render(request, self.template_name,{'all_products':  products})
+        return render(request, self.template_name,{'all_products': Product.objects.get_all_products()})
+        
 
 class ProductDetailView(DetailView):
     model = Product
