@@ -8,19 +8,29 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def add_to_cart(request, pk):
-    
-    product_found = Product.objects.get(id=pk)
-    print(product_found)
-    order, created = Order.objects.get_or_create(
-        user=request.user,
-        name=product_found.name,
-        description=product_found.description,
-        price=product_found.price,
-        image_url=product_found.image_url,
-        descount=product_found.descount
-    )
-    # Agregar el producto a la relación ManyToManyField
-    order.product.add(product_found)    
+    product = get_object_or_404(Product, id=pk)
+    quantity = int(request.POST.get('quantity'))
+    total_price = product.price * quantity
+
+    try:
+        order = Order.objects.get(product_id=product.id)
+        order.quantity = quantity
+        order.total_price = total_price
+        order.save()
+    except Order.DoesNotExist:
+        order = Order.objects.create(
+            user=request.user,
+            name=product.name,
+            description=product.description,
+            price=product.price,
+            image_url=product.image_url,
+            descount=product.descount,
+            quantity=quantity,
+            total_price=total_price,
+            product_id=product.id
+        )
+        order.product.add(product)
+
     return redirect('cart')
 
 def remove_from_cart(request, pk):

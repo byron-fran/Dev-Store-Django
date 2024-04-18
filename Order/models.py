@@ -5,7 +5,6 @@ from Products.models import Product
 # Create your models here.
 class Order(models.Model):
 
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ManyToManyField(Product)
     name = models.CharField(max_length=100)
@@ -14,8 +13,10 @@ class Order(models.Model):
     image_url = models.FileField(upload_to='products/')
     descount = models.FloatField()
     paid= models.BooleanField(default=False)
- 
-
+    quantity = models.IntegerField(name='quantity', null=True )
+    total_price = models.IntegerField(name='total_price', null=True)
+    product_id = models.CharField(max_length=200, null=True)
+    
     class Meta:
         ordering = ['-name']
         verbose_name='order'
