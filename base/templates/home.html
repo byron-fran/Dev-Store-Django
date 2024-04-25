@@ -1,11 +1,43 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
-
 {% load static %}
 {% include 'navbar.html' %}
-<main>
-  <h1>Hola desde el home</h1>
-</main>
+
+  <main class="bg-[url('./images/grafico1.jpg')] bg-cover bg-center bg-no-repeat w-full md:h-[25rem] bg-black bg-blend-multiply bg-opacity-70 flex justify-center items-center">
+    <div class="flex flex-col justify-center w-[50%] text-center text-white">
+      <h1 class="text-white md:text-3xl font-extrabold ">The best accessories for programmers</h1>
+      <p class="text-white mt-10 text-left line-clamp-5 md:line-clamp-6">
+        {% lorem 90 w random %}
+      </p>
+    </div>
+  </main>
+  {% comment %} Products in offer {% endcomment %}
+  <h2 class="text-center mt-8 text-3xl  font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-green-600  "> The best deals </h2>
+  <section class="grid grid-cols-4 mx-auto w-[90%] my-8 gap-4">
+    {% for product in products_offer%}
+      <div >
+        <img class="w-[200px] object-contain h-[200px] mx-auto " src=" {{ product.image_url.url}} " alt=" {{ product.name}} "/>
+        <div>
+          <p class="text-center my-4 font-bold text-xl"> {{ product.name }} </p>
+          <a href="{%  url 'product:detail_product' product.slug %} " 
+            class="bg-indigo-600 p-2 flex justify-center gap-10 items-center w-[90%] mx-auto rounded-md text-white text-xl font-bold hover:cursor-pointer hover:bg-indigo-800"> 
+            {{ product.descount}}%Off
+            <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+            </svg>            
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </section>
+{% comment %} About {% endcomment %}
+  <section class="mt-10 bg-[url('images/tecno-2.webp')] bg-cover bg-center bg-no-repeat w-full grid md:grid-cols-2 grid-rows-2 md:grid-rows-none md:h-[20rem] ">
+    <div class="text-white text-center bg-black bg-opacity-70 p-4">
+      <h2 class="font-extrabold text-2xl ">Why buy here?</h2>
+      <p class="line-clamp-5 md:line-clamp-[10] mt-8 "> {% lorem 60 w random %} </p>
+    </div>
+    <div>
+
+    </div>
+  </section>
 {% endblock %}

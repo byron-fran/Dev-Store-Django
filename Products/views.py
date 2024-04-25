@@ -10,11 +10,13 @@ from .models import Product
 from .forms import ProductFilterForm
 from .models import Mark
 
-class ProductsListView(TemplateView):
+class ProductsListView( ListView):
     
     model = Product
     template_name = 'products.html'
- 
+    paginate_by=2
+    
+
     
     def get_queryset(self) -> QuerySet[Any]:
         return Product.objects.get_all_products()
