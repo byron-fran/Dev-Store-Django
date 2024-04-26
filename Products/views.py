@@ -29,7 +29,7 @@ class ProductsListView(ListView):
         
         if q:
             products = Product.objects.products_search(q)
-            paginator = Paginator(products, 2)
+            paginator = Paginator(products, 9)
             page_obj = paginator.get_page(page_number)
             products_per_page = page_obj.object_list
             context['p'] = paginator
@@ -37,7 +37,7 @@ class ProductsListView(ListView):
             context['products'] = products_per_page
             
         elif mark is not None or category is not None:
-            paginator = Paginator(f.qs, 2)
+            paginator = Paginator(f.qs, 9)
             page_obj = paginator.get_page(page_number)
             products_per_page = page_obj.object_list
             context['p'] = paginator
@@ -45,7 +45,7 @@ class ProductsListView(ListView):
             context['products'] = products_per_page
        
         else:
-            paginator = Paginator(Product.objects.all(), 2)
+            paginator = Paginator(Product.objects.all(), 9)
             page_obj = paginator.get_page(page_number)
             products_per_page = page_obj.object_list
             context['p'] = paginator
