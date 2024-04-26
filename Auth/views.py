@@ -1,5 +1,8 @@
-from django.shortcuts import render
-from django.views.generic.edit import FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import BaseModelForm
+from django.http import HttpRequest, HttpResponse
+from django.views.generic.edit import FormView, UpdateView
+from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -8,6 +11,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from .forms import UserForm, LoginForm
+from .models import User
 from django.contrib.auth.views import (
                                         PasswordResetView, 
                                         PasswordResetDoneView, 
@@ -83,4 +87,27 @@ class PasswordRestConfirm(PasswordResetConfirmView):
 class PasswordResetComplete(PasswordResetCompleteView):
     template_name = 'passwords/password_complete.html'    
 
+
+# Users
+class ProfileView(LoginRequiredMixin, UpdateView):
+    template_name = 'user/profile.html'
+    model = User
+    fields = ['username', 'email', 'first_name', 'last_name']
+    success_url = '/accounts/profile/'
     
+    def get_context_data(self, **kwargs: reverse_lazy): # type: ignore
+        
+        context = super().get_context_data(**kwargs)
+        user = User.objects.get(id=self.request.user.id)
+        context['user'] = user  
+        return context
+    
+    def dispatch(self, request: HttpRequest, *args: reverse_lazy, **kwargs: reverse_lazy): # type: ignore
+        user_id =self.kwargs['pk']
+        if int(user_id) != self.request.user.id:
+            return redirect(reverse_lazy('home'))
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_success_url(self) -> str:
+        return f'{self.success_url}{self.request.user.id}?ok=1'
+        

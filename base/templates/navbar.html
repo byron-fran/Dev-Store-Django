@@ -1,5 +1,5 @@
 {% load static  %}
-<nav class="shadow-md flex justify-between items-center text-indigo-600 p-4 w-full z-50  transition-transform duration-300 z-10 ease-in-out transform" id="navbar">
+<nav class="shadow-md flex justify-between items-center text-indigo-600 p-4 w-full   transition-transform duration-300 z-10 ease-in-out transform" id="navbar">
     <a class="font-extrabold text-2xl " href={% url  'home' %}>Home</a>
     <ul class="flex  justify-end gap-8">
 
@@ -16,6 +16,9 @@
         {% if  request.user.is_authenticated %}
         <li> 
             <a href="{% url 'auth:account_logout' %}" class="font-bold">Logout</a>
+        </li>
+        <li> 
+            <a href="{% url 'auth:profile' request.user.id %}" class="font-bold">profile</a>
         </li>
         <li> 
             <a href="{% url 'cart' %}">
