@@ -1,5 +1,6 @@
 from django import forms
 from .models import Mark
+
 class ProductFilterForm(forms.Form):
 
     mark = forms.CharField(

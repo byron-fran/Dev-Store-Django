@@ -4,17 +4,18 @@
 {% include 'navbar.html' %}
 {% load format_currency %}
 {% load  widget_form %}
+{% load converted_number %}
 
   <main class="h-full">
     <div class="grid md:grid-cols-5 h-[100%]">
       <aside class="bg-indigo-800 p-4 md:col-span-1 w-full 
-        {% if  all_products|length > 3 %} 
+        {% if  products|length > 3 %} 
           h-auto 
         {% else %} 
           h-[40rem]
         {% endif %} ">
 
-        <form method="GET" action="{% url 'product:list_products' %}">
+        <form method="GET">
           <label class="block text-white my-1"> {{ form.category.label}} </label>
           {{ form.category|add_classes:"w-full rounded-md "  }}
           <label class="block text-white my-1"> {{ form.mark.label}} </label>
@@ -26,11 +27,11 @@
       <div class="md:col-span-4 md:w-[90%] mx-auto">
 
         {% include 'searchbar.html' %}
-        {% if all_products|length > 0 %}
+        {% if products|length > 0 %}
 
           <ul class="grid md:gap-4 md:grid-cols-3">
 
-            {% for product in all_products %}
+            {% for product in products %}
             <li class="shadow-md p-4 rounded-md my-10">
               <img class="w-[90%] md:w-[200px] mx-auto" src={{ product.image_url.url }} alt={{ product.name }}/>
               <div class="flex justify-center items-center gap-4 mt-4">
@@ -48,7 +49,38 @@
             {% endfor %}
 
           </ul>
-          
+          <!-- secction pagination  -->
+          <div class="w-full flex justify-center gap-2 items-center">
+            
+            {% if page_obj.has_previous  %}
+            <a href="?page={{ page_obj.previous_page_number}}" class="shadow-md p-2 rounded-md bg-slate-200">previous</a>
+            {% else %}
+            <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">previous</button>  
+            {% endif %}
+            
+            {% for page in p.page_range %}
+
+              {% if  page == page_number|to_number %}
+                <button disabled class="p-2 rounded-md bg-indigo-800 text-white"> 
+                  {{ page }} 
+                </button>
+              {% else %}
+                <a href="?page={{ page }}" 
+                  class=" p-2 rounded-md bg-slate-200 shadow-md "> 
+                  {{ page }} 
+                </a>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number}}" class=" shadow-md p-2 rounded-md bg-slate-200">next</a>
+            {% else %}
+              <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">next</button>  
+            {% endif %}
+
+          </div>
+          <!-- end secction pagination -->
+
         {% else %}
           <div class="flex justify-center mt-4">
             <p class="text-center font-bold text-2xl">No results</p>

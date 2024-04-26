@@ -11,7 +11,7 @@
         </li>
         {% endif %}
         <li>
-            <a class="font-bold" href="{% url  'product:list_products'  %}">store </a>
+            <a class="font-bold" href="{% url  'product:list_products'  %}?page=1">store </a>
         </li>
         {% if  request.user.is_authenticated %}
         <li> 
