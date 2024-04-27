@@ -10,7 +10,7 @@
     <div class="grid md:grid-cols-5 h-[100%]">
       <aside class="bg-indigo-800 p-10 md:col-span-1 w-full mb-0
         {% if  products|length > 3 %} 
-          h-auto  
+          h-full
         {% else %} 
           h-screen
         {% endif %} ">
@@ -101,5 +101,6 @@
       </div>
     </div>
   </main>
-  <script src="{% static './js/app.js' %}"></script>
+  <script src="{% static './js/App.js' %}"></script>
+  {% include "footer.html" %} 
 {% endblock %}

@@ -5,6 +5,7 @@ from django.http.response import HttpResponse as HttpResponse
 from django.views.generic import ListView, DetailView, FormView, TemplateView
 from .models import Product
 from .filters import ProductFilter
+from reviews.forms import ReviewForm
 
 class ProductsListView(ListView):
     model = Product
@@ -26,7 +27,6 @@ class ProductsListView(ListView):
         context['form'] = f.form
         context['page_number'] = page_number
     
-        
         if q:
             products = Product.objects.products_search(q)
             paginator = Paginator(products, 9)
@@ -58,3 +58,7 @@ class ProductDetailView(DetailView):
     model = Product
     context_object_name = "product"
     template_name = "product.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ReviewForm
+        return context

@@ -5,4 +5,4 @@ from .models import Reviews
 
 @admin.register(Reviews)
 class ReviewsAdmin(admin.ModelAdmin):
-    list_display = ['user', 'product']
+    list_display = ['user', 'product', 'stars']
