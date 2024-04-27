@@ -8,15 +8,30 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Function to create or update a order
 def add_to_cart(request, pk):
+    
     product = get_object_or_404(Product, id=pk)
     quantity = int(request.POST.get('quantity'))
     total_price = product.price * quantity
 
     try:
         order = Order.objects.get(product_id=product.id)
+        
+        new_stock : int
+        
+        if quantity > order.quantity:
+            new_stock = quantity - order.quantity
+            product.stock = product.stock -  new_stock
+          
+        elif order.quantity > quantity:
+            new_stock = order.quantity - quantity
+            product.stock = product.stock + new_stock
+            
         order.quantity = quantity
         order.total_price = total_price
+        
+        product.save()        
         order.save()
+        
     except Order.DoesNotExist:
         order = Order.objects.create(
             user=request.user,
@@ -29,6 +44,8 @@ def add_to_cart(request, pk):
             total_price=total_price,
             product_id=product.id
         )
+        product.stock = product.stock - quantity
+        product.save()
         order.product.add(product)
 
     return redirect('cart')
@@ -36,6 +53,12 @@ def add_to_cart(request, pk):
 # function to remove a order
 def remove_from_cart(request, pk):
     order = Order.objects.get(id=pk)
+    product  = Product.objects.get(id=order.product_id)
+    
+    product.stock = product.stock + order.quantity
+    product.save()
+    
+
     order.delete()
     return redirect('cart')
 
