@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, FormView, TemplateView
 from .models import Product
 from .filters import ProductFilter
 from reviews.forms import ReviewForm
+from reviews.models import Reviews
 
 class ProductsListView(ListView):
     model = Product
@@ -58,7 +59,11 @@ class ProductDetailView(DetailView):
     model = Product
     context_object_name = "product"
     template_name = "product.html"
+    
     def get_context_data(self, **kwargs):
+        product = Product.objects.get(slug=self.kwargs['slug'])
+    
         context = super().get_context_data(**kwargs)
         context['form'] = ReviewForm
+        context['reviews'] = Reviews.objects.filter(product=product)   
         return context

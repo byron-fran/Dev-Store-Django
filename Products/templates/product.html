@@ -5,6 +5,7 @@
 {% load custom_filters %}
 {% load format_currency %}
 {% load add_class_input %}
+{% load verify_user_review %}
 
 <main class="w-full">
     <form 
@@ -59,13 +60,19 @@
     <!-- Secction of form review-->
     <!-- Modal toggle review  -->
     <div class="flex w-[90%] mt-20 justify-end ">
-        <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="flex gap-2 border border-gray-200 py-2 px-4 rounded-md bg-indigo-800 text-white" type="button">
-            Add review
-            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-              </svg>
-              
-        </button>
+        {% if request.user.is_authenticated %}  
+           {% if request.user|verify_user_review:product %}    
+                
+                <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="flex gap-2 border border-gray-200 py-2 px-4 rounded-md bg-indigo-800 text-white" type="button">
+                    Add review
+                    <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                  
+                </button>
+           {% endif %}
+         
+        {% endif %}
     </div>
 
     <!--form  Main modal  review -->
@@ -125,7 +132,7 @@
                     return `
                     <svg class="w-6 h-6 text-yellow-300 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
-                      </svg>
+                    </svg>
                       
                     `
                 }).join('')
@@ -133,5 +140,6 @@
         })
     </script>
 </main>
+{% include "reviews.html" %}
 {% include "footer.html" %}
 {% endblock %}
