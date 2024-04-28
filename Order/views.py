@@ -48,7 +48,7 @@ def add_to_cart(request, pk):
         product.save()
         order.product.add(product)
 
-    return redirect(f'/product/{product.slug}/')
+    return redirect('cart')
 
 # function to remove a order
 def remove_from_cart(request, pk):

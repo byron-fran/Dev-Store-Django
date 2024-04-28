@@ -2477,6 +2477,10 @@ input:checked + .toggle-bg {
   margin-bottom: 0.25rem;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -2537,8 +2541,12 @@ input:checked + .toggle-bg {
   margin-top: 10rem;
 }
 
-.mb-10 {
-  margin-bottom: 2.5rem;
+.mt-\[20rem\] {
+  margin-top: 20rem;
+}
+
+.mt-\[25rem\] {
+  margin-top: 25rem;
 }
 
 .box-border {
@@ -2875,10 +2883,6 @@ input:checked + .toggle-bg {
 
 .cursor-pointer {
   cursor: pointer;
-}
-
-.cursor-help {
-  cursor: help;
 }
 
 .touch-auto {
@@ -4523,10 +4527,6 @@ input:checked + .toggle-bg {
 
 .opacity-75 {
   opacity: 0.75;
-}
-
-.opacity-40 {
-  opacity: 0.4;
 }
 
 .bg-blend-normal {
@@ -6451,14 +6451,6 @@ input:checked + .toggle-bg {
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
-}
-
-.hover\:opacity-40:hover {
-  opacity: 0.4;
-}
-
-.hover\:opacity-30:hover {
-  opacity: 0.3;
 }
 
 .hover\:opacity-70:hover {

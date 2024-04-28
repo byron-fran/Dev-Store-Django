@@ -6,7 +6,7 @@
 {% load format_currency %}
 {% load calculate_quantity %}
 {% load calculate_price %}
-<main class="w-[90%] md:w-[70%] xl:w-[50%] mx-auto mb-10">
+<main class="w-[90%] md:w-[70%] xl:w-[50%] mx-auto mb-10 {% if orders.count  < 3  %} h-screen {% endif %}">
    {% if orders|calculate_quantity %}
    
    <div class='flex flex-col mt-8 gap-4'>
@@ -52,5 +52,8 @@
     </div>
    {% endif %}
 </main>
+
+{% include "footer.html" %}
+
 
 {% endblock %}
