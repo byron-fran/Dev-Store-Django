@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'Products.apps.ProductsConfig',
     'Order',
     'reviews',
+    'favorites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

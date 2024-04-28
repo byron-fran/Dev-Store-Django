@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('Order.urls')),
     path('reviews/', include('reviews.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
+    path('favorites/', include('favorites.urls'))
 ]
 
 

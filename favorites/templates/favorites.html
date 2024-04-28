@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+{% include 'navbar.html' %}
+    <div class="mt-20">
+        <div>
+            {% for favorite in favorites %}
+                
+                <h1>{{ favorite.product.price }}</h1>
+                <h2>{{ product.product.name }}</h2>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
