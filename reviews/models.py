@@ -3,6 +3,7 @@ from Auth.models import User
 from Products.models import Product
 import pytz
 from django.utils import timezone
+from .managers import ReviewManager
 
 # Create your models here.
 class Reviews(models.Model):
@@ -18,6 +19,8 @@ class Reviews(models.Model):
     comment = models.TextField(max_length=1000)
     stars = models.IntegerField(choices=STAR_CHOICES, null=True)
     created = models.DateField(auto_now_add=True, null=True)
+
+    objects = ReviewManager()
 
     class Meta:
         verbose_name = "review"

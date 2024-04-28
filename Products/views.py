@@ -62,8 +62,11 @@ class ProductDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         product = Product.objects.get(slug=self.kwargs['slug'])
-    
+        stars_avg = Product.objects.avg_stars(product)
+        
         context = super().get_context_data(**kwargs)
         context['form'] = ReviewForm
         context['reviews'] = Reviews.objects.filter(product=product)   
+        context['stars_avg'] = round(stars_avg, 2)
+        context['total_reviews'] =product.reviews_set.all().count()
         return context

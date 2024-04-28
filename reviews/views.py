@@ -10,6 +10,7 @@ from .models import Reviews
 # Create your views here.
 
 class ListReviews(ListView):
+    
     model = Reviews
     context_object_name = 'reviews'
     template_name = 'reviews.html'
