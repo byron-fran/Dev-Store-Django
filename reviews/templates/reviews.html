@@ -7,6 +7,7 @@
 {% load color_tag %}
 
   <main class="w-[90%] lg:w-[80%] mx-auto mt-10">
+    <h1 class="text-center font-bold">Reviews {{ reviews|length}} </h1>
     <div >
         {% for review in  reviews%} 
             <div class="my-8 flex flex-col">
@@ -35,7 +36,7 @@
                 <!--Secction comment-->
                 <p class="mt-2"> {{ review.comment}} </p>
                
-                <p class="mt-2 text-indigo-800"> {{ review.created}}</p>        
+                <p class="mt-2 text-indigo-800"> {{ review.created }}</p>        
             </div>
   
         {% endfor %}
