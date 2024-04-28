@@ -28,7 +28,7 @@ def add_to_cart(request, pk):
             
         order.quantity = quantity
         order.total_price = total_price
-        
+
         product.save()        
         order.save()
         

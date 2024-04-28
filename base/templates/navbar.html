@@ -1,7 +1,7 @@
 
-<nav class="shadow-md flex justify-between items-center text-indigo-800 p-4 w-full   transition-transform duration-300 z-50 ease-in-out transform" id="navbar">
+<nav class="shadow-md flex-col md:flex-row flex justify-between items-center text-indigo-800 p-4 w-full   transition-transform duration-300 z-50 ease-in-out transform" id="navbar">
     <a class="font-extrabold text-2xl " href={% url  'home' %}>Dev Store</a>
-    <ul class="flex  justify-end gap-8">
+    <ul class="flex  justify-end gap-4 md:gap-8">
         
         <li>
             <a class="font-bold" href="{% url  'product:list_products'  %}?page=1">store </a>
