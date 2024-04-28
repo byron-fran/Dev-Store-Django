@@ -48,7 +48,7 @@ def add_to_cart(request, pk):
         product.save()
         order.product.add(product)
 
-    return redirect('cart')
+    return redirect(f'/product/{product.slug}/')
 
 # function to remove a order
 def remove_from_cart(request, pk):
@@ -60,7 +60,7 @@ def remove_from_cart(request, pk):
     
 
     order.delete()
-    return redirect('cart')
+    return redirect('cart', )
 
 # lsit view to show cart list
 class ListOrdersView(LoginRequiredMixin, ListView):
@@ -73,11 +73,3 @@ class ListOrdersView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['orders'] = context['orders'].filter(user=self.request.user)
         return context
-
-    
-
-    
-
-  
-    
-    

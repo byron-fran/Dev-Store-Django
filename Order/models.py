@@ -1,7 +1,7 @@
 from django.db import models
 from Auth.models import User
 from Products.models import Product
-
+from .managers import OrderManager
 # Create your models here.
 class Order(models.Model):
 
@@ -17,6 +17,7 @@ class Order(models.Model):
     total_price = models.IntegerField(name='total_price', null=True)
     product_id = models.CharField(max_length=200, null=True)
     
+    objects = OrderManager()
     class Meta:
         ordering = ['-name']
         verbose_name='order'

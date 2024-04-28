@@ -8,7 +8,10 @@
 {% load verify_user_review %}
 {% load fixed_number %}
 {% load get_remainder %}
+{% load product_stock %}
+
 <main class="w-full">
+ 
     <form 
         action="{% url 'add_to_cart' product.id %}"
         method="POST"
@@ -53,14 +56,24 @@
                     {% endif %}
                 {% endif %}
             </div>
+        
             <div>
                 {% if request.user.is_authenticated %}
                     <button
                         type="submit"
-                        class="bg-indigo-800 w-full hover:bg-indigo-900 cursor-pointer p-2 rounded-md flex  justify-center items-center gap-4 text-white text-center font-bold mt-4  ">Add to cart
-                        <svg class="w-6 h-6 text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
-                          </svg>
+                        {% if  product.stock|product_stock %}
+                            disabled
+                        {% endif %}
+                        class="bg-indigo-800 w-full hover:bg-indigo-900 {% if product.stock|product_stock %}cursor-not-allowed hover:opacity-70 {% else %} cursor-pointer {% endif%} p-2 rounded-md flex  justify-center items-center gap-4 text-white text-center font-bold mt-4  ">
+                            {% if  product.stock|product_stock %}
+                                Out of stock
+                            {% else %}
+                                Add to cart
+                                <svg class="w-6 h-6 text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
+                                </svg>
+                            {% endif %}
+                        
                     </button>
                 {% else %} 
                 <a href={% url 'account_login'  %}
