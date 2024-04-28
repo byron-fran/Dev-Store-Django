@@ -20,11 +20,11 @@
 <aside id="default-sidebar" class="fixed top-0 sm:top-[1rem] left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
     <form method="GET" class="mt-10">
-      <label class="block text-white my-1"> {{ form.category.label}} </label>
+      <label class="block text-indigo-800 my-1"> {{ form.category.label}} </label>
       {{ form.category|add_classes:"w-full rounded-md "  }}
-      <label class="block text-white my-1"> {{ form.mark.label}} </label>
+      <label class="block text-indigo-800 my-1"> {{ form.mark.label}} </label>
       {{  form.mark|add_classes:"w-full rounded-md " }}
-      <button class="bg-indigo-900 text-white w-full mt-4 p-2 rounded-md font-bold" type="submit">Filter</button>
+      <button class="bg-indigo-800 text-white w-full mt-4 p-2 rounded-md font-bold" type="submit">Filter</button>
     </form>
   </div>
 </aside>
@@ -89,45 +89,45 @@
     </div>
   </div>
   {% if products|length > 0 %}
-  <!-- secction pagination  -->
+    <!-- secction pagination  -->
   <div class="w-full flex justify-center gap-2 items-center  mt-20
-  {% if  products|length > 3 %} 
-  mt-0
-  {% else %} 
-  mt-[10rem]
-  {% endif %} 
-  
-  ">
-  
-  {% if page_obj.has_previous  %}
-  <a href="?page={{ page_obj.previous_page_number}}" class="shadow-md p-2 rounded-md bg-slate-200">previous</a>
-  {% else %}
-  <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">previous</button>  
-  {% endif %}
-          
-  {% for page in p.page_range %}
-  
-  {% if  page == page_number|to_number %}
-  <button disabled class="p-2 rounded-md bg-indigo-800 text-white"> 
-    {{ page }} 
-  </button>
-  {% else %}
-  <a href="?page={{ page }}" 
-  class=" p-2 rounded-md bg-slate-200 shadow-md "> 
-  {{ page }} 
-</a>
-{% endif %}
-{% endfor %}
+      {% if  products|length > 3 %} 
+      mt-0
+      {% else %} 
+      mt-[10rem]
+      {% endif %} 
 
-{% if page_obj.has_next %}
-<a href="?page={{ page_obj.next_page_number}}" class=" shadow-md p-2 rounded-md bg-slate-200">next</a>
-{% else %}
-<button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">next</button>  
-{% endif %}
+      ">
 
-</div>
-<!-- end secction pagination -->
-{% endif %}
+      {% if page_obj.has_previous  %}
+      <a href="?page={{ page_obj.previous_page_number}}" class="shadow-md p-2 rounded-md bg-slate-200">previous</a>
+      {% else %}
+      <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">previous</button>  
+      {% endif %}
+
+      {% for page in p.page_range %}
+
+      {% if  page == page_number|to_number %}
+      <button disabled class="p-2 rounded-md bg-indigo-800 text-white"> 
+        {{ page }} 
+      </button>
+      {% else %}
+      <a href="?page={{ page }}" 
+      class=" p-2 rounded-md bg-slate-200 shadow-md "> 
+      {{ page }} 
+    </a>
+    {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number}}" class=" shadow-md p-2 rounded-md bg-slate-200">next</a>
+    {% else %}
+    <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">next</button>  
+    {% endif %}
+
+  </div>
+    <!-- end secction pagination -->
+    {% endif %}
 </div>
 
 <div class=" w-full  absolute sm:z-50 p-0 ">
