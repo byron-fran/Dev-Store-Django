@@ -9,7 +9,7 @@
 {% load get_remainder %}
 {% load get_avg %}
 {% load verify_favorite %}
-
+{% load fixed_number %}
 <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
   <span class="sr-only">Open sidebar</span>
   <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -32,8 +32,9 @@
 <div class="p-4 sm:ml-64">
   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
     <div class="md:col-span-4 md:w-[90%] mx-auto sm:mt-[5rem]">
-
+     
       {% include 'searchbar.html' %}
+      <!-- if products length -->
       {% if products|length > 0 %}
 
         <ul class="grid md:gap-4 md:grid-cols-2 lg:grid-cols-3 mt-5">
@@ -43,13 +44,14 @@
             <!--Secction favorite icon-->
             <div class="flex justify-end">
               {% if product|verify_favorite:request.user %}
-                <a href="{% url  'favorites:remove' product.id %}">
+                <a href="{% url  'favorites:remove' product.id page_number %}">
                   <svg class="w-6 h-6 text-pink-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
                   </svg>
                 </a>
+           
               {% else %}
-                <a href="{% url  'favorites:add' product.id %}">
+                <a href="{% url  'favorites:add' product.id page_number %}">
                   <svg class="w-6 h-6 text-gray-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
                   </svg>
@@ -64,12 +66,13 @@
             <div class="flex flex-col justify-center items-center mt-4">
               <!--Secction of stars-->
               <div class="flex items-center mt-1">
-                {% for  star in  product.reviews_set.all.count|get_range %}
+          
+                {% for  star in product|get_avg_stars|fixed_number|get_range %}
                   <svg class="w-4 h-4 text-yellow-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
                   </svg>
                   {% endfor %}
-                  {% for  star in  product.reviews_set.all.count|get_remainder %}
+                  {% for  star in  product|get_avg_stars|fixed_number|get_remainder %}
                   <svg class="w-4 h-4 text-gray-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
                   </svg>

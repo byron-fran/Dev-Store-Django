@@ -6,25 +6,33 @@ from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-def add_favorite(request, id):
+def add_favorite(request, id, page):
     product = Product.objects.get(id=id)
     try:
         favorite = Favorite(user=request.user, product=product)
         favorite.save()
     except:
         print("error")
-    return redirect('/products/?page=1')
+    return redirect(f'/products/?page={page}')
 
-def remove_Favorite(request, pk):
+def remove_Favorite(request, pk, page):
+    
     product = Product.objects.get(id=pk)
-    print(product)
+    fav = Favorite.objects.filter(product=product, user=request.user)
+    fav.delete()
+
+    return redirect(f'/products/?page={page}')
+
+def remove_Favorite_from_list(request, pk):
+    
     try:
-        fav = Favorite.objects.filter(product=product, user=request.user)
+        fav = Favorite.objects.get(id=pk)
         fav.delete()
+        pass
     except:
-        print('Error')
-        
-    return redirect('/products/?page=1')
+        print("Error")
+    return redirect('/favorites/list/')
+
 
 class ListFavorite(LoginRequiredMixin, ListView):
     model = Favorite
