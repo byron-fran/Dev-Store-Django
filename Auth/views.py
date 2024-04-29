@@ -62,7 +62,7 @@ class LoginView(UserPassesTestMixin,FormView):
             return super().form_valid(form)
         else:
             # Si el inicio de sesión no es válido, redirige a la página de inicio de sesión
-            messages.error(self.request, 'Nombre de usuario o contraseña incorrectos.')
+            messages.error(self.request, 'Email o contraseña incorrectos.')
             return self.form_invalid(form)
 
     def get_success_url(self):

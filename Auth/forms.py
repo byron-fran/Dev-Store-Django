@@ -33,6 +33,12 @@ class UserForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Email already exists')
         return email  
+    
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError('Username already exists')
+        return username
 
 class EmailForm(forms.ModelForm):
     email = forms.EmailField(required=True, help_text='Requerido. 254 caracteres como maximo y debe ser valido')

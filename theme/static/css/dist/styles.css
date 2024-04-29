@@ -3955,6 +3955,11 @@ input:checked + .toggle-bg {
   background-color: rgb(54 47 120 / var(--tw-bg-opacity));
 }
 
+.bg-pink-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(214 31 105 / var(--tw-bg-opacity));
+}
+
 .bg-slate-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
@@ -3976,16 +3981,6 @@ input:checked + .toggle-bg {
 
 .bg-white\/50 {
   background-color: rgb(255 255 255 / 0.5);
-}
-
-.bg-pink-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(153 21 75 / var(--tw-bg-opacity));
-}
-
-.bg-pink-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(214 31 105 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-70 {
@@ -4550,8 +4545,32 @@ input:checked + .toggle-bg {
   opacity: 0.5;
 }
 
+.opacity-60 {
+  opacity: 0.6;
+}
+
 .opacity-75 {
   opacity: 0.75;
+}
+
+.opacity-70 {
+  opacity: 0.7;
+}
+
+.opacity-20 {
+  opacity: 0.2;
+}
+
+.opacity-30 {
+  opacity: 0.3;
+}
+
+.opacity-80 {
+  opacity: 0.8;
+}
+
+.opacity-90 {
+  opacity: 0.9;
 }
 
 .bg-blend-normal {
@@ -6805,6 +6824,10 @@ input:checked + .toggle-bg {
   .sm\:translate-x-0 {
     --tw-translate-x: 0px;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .sm\:underline {

@@ -12,7 +12,7 @@
             {% if request.user.is_authenticated %}
             <li>
                 <p class="font-bold">
-                    Hello, {{ request.user }}
+                    Hello, {{ request.user.username }}
                 </p>
             </li>
             {% endif %}

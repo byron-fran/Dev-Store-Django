@@ -16,8 +16,9 @@ class User(AbstractUser):
         help_text="username must be unique",
         error_messages="Username is required",
         max_length=50,
-        unique=True
+        unique=False
     )
-    
+    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'
     class Meta:
         db_table = "users"

@@ -1,161 +1,151 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
-{% include 'navbar.html' %}
-{% load format_currency %}
-{% load  widget_form %}
-{% load converted_number %}
-{% load get_range %}
-{% load get_remainder %}
-{% load get_avg %}
-{% load verify_favorite %}
-{% load fixed_number %}
-<button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-  <span class="sr-only">Open sidebar</span>
-  <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-  <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-  </svg>
-</button>
+  {% load static %}
+  {% include 'navbar.html' %}
+  {% load format_currency %}
+  {% load widget_form %}
+  {% load converted_number %}
+  {% load get_range %}
+  {% load get_remainder %}
+  {% load get_avg %}
+  {% load verify_favorite %}
+  {% load fixed_number %}
+  <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+    <span class="sr-only">Open sidebar</span>
+    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+    </svg>
+  </button>
 
-<aside id="default-sidebar" class="fixed top-0 sm:top-[1rem] left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-  <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-    <form method="GET" class="mt-10">
-      <label class="block text-indigo-800 my-1"> {{ form.category.label}} </label>
-      {{ form.category|add_classes:"w-full rounded-md "  }}
-      <label class="block text-indigo-800 my-1"> {{ form.mark.label}} </label>
-      {{  form.mark|add_classes:"w-full rounded-md " }}
-      <button class="bg-indigo-800 text-white w-full mt-4 p-2 rounded-md font-bold" type="submit">Filter</button>
-    </form>
-  </div>
-</aside>
-
-<div class="p-4 sm:ml-64">
-  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-    <div class="md:col-span-4 md:w-[90%] mx-auto sm:mt-[5rem]">
-     
-      {% include 'searchbar.html' %}
-      <!-- if products length -->
-      {% if products|length > 0 %}
-
-        <ul class="grid md:gap-4 md:grid-cols-2 lg:grid-cols-3 mt-5">
-
-          {% for product in products %}
-          <li class="shadow-md p-4 rounded-md mb-6">
-            <!--Secction favorite icon-->
-            <div class="flex justify-end">
-              {% if product|verify_favorite:request.user %}
-                <a href="{% url  'favorites:remove' product.id page_number %}">
-                  <svg class="w-6 h-6 text-pink-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
-                  </svg>
-                </a>
-           
-              {% else %}
-                <a href="{% url  'favorites:add' product.id page_number %}">
-                  <svg class="w-6 h-6 text-gray-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
-                  </svg>
-                </a>
-              {% endif %}
-        
-            </div>
-            
-            <!--Image of product-->
-            <img class=" md:w-[150px] mx-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-110" src="{{ product.image_url.url }}" alt="{{ product.name }}"/>
-            <!--Secction of description of product -->
-
-            <!--Secction of stars-->
-            <div class="flex flex-col justify-center items-center mt-4">
-              <div class="flex items-center mt-1">
-                {% if product.reviews_set.all.count > 0 %}
-                  {% for  star in product|get_avg_stars|fixed_number|get_range %}
-                    <svg class="w-4 h-4 text-yellow-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
-                    </svg>
-                  {% endfor %}
-                  {% for  star in  product|get_avg_stars|fixed_number|get_remainder %}
-                    <svg class="w-4 h-4 text-gray-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
-                    </svg>
-                  {% endfor %}
-                  <p class="font-bold ml-1">{{ product|get_avg_stars }}</p>
-                  <p class="ml-2">({{ product.reviews_set.all.count}})</p>
-                {% endif %}
-              </div>
-              <!--End secction of stars-->
-
-              <p class="text-indigo-800 font-medium text-center mb-2"> {{ product.name }} </p>
-              <!--button add to cart-->
-               <div class="flex w-full ">
-                 <a href="{% url 'product:detail_product' product.slug %}" class="bg-indigo-800 text-white p-2 font-bold rounded-lg w-[80%] mx-auto flex justify-center items-center text-center gap-4">
-                   <p class=" text-white text-[15px]">{{ product.price|currency }}</p>
-                   <svg class="w-6 h-6 text-white hover:transition-all hover:scale-125" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24">
-                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-                   </svg>
-                 </a>
-               </div>
-              <!-- End button add to cart-->
-            </div>
-            <!--End secction of description of product -->
-           </li>
-          {% endfor %}
-
-        </ul>
-
-
-      <!-- It show if there no products -->
-      {% else %}
-        <div class="flex justify-center mt-4 h-screen">
-          <p class="text-center font-bold text-2xl">No results</p>
-        </div>
-      {% endif %}
+  <aside id="default-sidebar" class="fixed top-0 sm:top-[1rem] left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+      <form method="GET" class="mt-10">
+        <label class="block text-indigo-800 my-1">{{ form.category.label }}</label>
+        {{ form.category|add_classes:'w-full rounded-md ' }}
+        <label class="block text-indigo-800 my-1">{{ form.mark.label }}</label>
+        {{ form.mark|add_classes:'w-full rounded-md ' }}
+        <button class="bg-indigo-800 text-white w-full mt-4 p-2 rounded-md font-bold" type="submit">Filter</button>
+      </form>
     </div>
-  </div>
-  {% if products|length > 0 %}
-    <!-- secction pagination  -->
-  <div class="w-full flex justify-center gap-2 items-center  mt-20
-      {% if  products|length > 3 %} 
-      mt-0
-      {% else %} 
-      mt-[10rem]
-      {% endif %} 
+  </aside>
+
+  <div class="p-4 sm:ml-64">
+    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+      <div class="md:col-span-4 md:w-[90%] mx-auto sm:mt-[5rem]">
+        {% include 'searchbar.html' %}
+        <!-- if products length -->
+        {% if products|length > 0 %}
+          <ul class="grid md:gap-4 md:grid-cols-2 lg:grid-cols-3 mt-5">
+            {% for product in products %}
+              <li class="shadow-md p-4 rounded-md mb-6">
+                <!-- Secction favorite icon -->
+                <div class="flex justify-end">
+                  {% if request.user.is_authenticated %}
+                    {% if product|verify_favorite:request.user %}
+                      <a href="{% url 'favorites:remove' product.id page_number %}">
+                        <svg class="w-6 h-6 text-pink-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                        </svg>
+                      </a>
+                    {% else %}
+                      <a href="{% url 'favorites:add' product.id page_number %}">
+                        <svg class="w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                        </svg>
+                      </a>
+                    {% endif %}
+
+                  {% else %}
+                    <a href="{% url 'auth:account_login' %}">
+                      <svg class="w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                      </svg>
+                    </a>
+                  {% endif %}
+                </div>
+
+                <!-- Image of product -->
+                <img class="md:w-[150px] mx-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-110" src="{{ product.image_url.url }}" alt="{{ product.name }}" />
+                <!-- Secction of description of product -->
+
+                <!-- Secction of stars -->
+                <div class="flex flex-col justify-center items-center mt-4">
+                  <div class="flex items-center mt-1">
+                    {% if product.reviews_set.all.count > 0 %}
+                      {% for star in product|get_avg_stars|fixed_number|get_range %}
+                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+                      {% endfor %}
+                      {% for star in product|get_avg_stars|fixed_number|get_remainder %}
+                        <svg class="w-4 h-4 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+                      {% endfor %}
+                      <p class="font-bold ml-1">{{ product|get_avg_stars }}</p>
+                      <p class="ml-2">({{ product.reviews_set.all.count }})</p>
+                    {% endif %}
+                  </div>
+                  <!-- End secction of stars -->
+
+                  <p class="text-indigo-800 font-medium text-center mb-2">{{ product.name }}</p>
+                  <!-- button add to cart -->
+                  <div class="flex w-full">
+                    <a href="{% url 'product:detail_product' product.slug %}" class="bg-indigo-800 text-white p-2 font-bold rounded-lg w-[80%] mx-auto flex justify-center items-center text-center gap-4">
+                      <p class="text-white text-[15px]">{{ product.price|currency }}</p>
+                      <svg class="w-6 h-6 text-white hover:transition-all hover:scale-125" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 12H5m14 0-4 4m4-4-4-4" />
+                      </svg>
+                    </a>
+                  </div>
+                  <!-- End button add to cart -->
+                </div>
+                <!-- End secction of description of product -->
+              </li>
+            {% endfor %}
+          </ul>
+
+          <!-- It show if there no products -->
+        {% else %}
+          <div class="flex justify-center mt-4 h-screen">
+            <p class="text-center font-bold text-2xl">No results</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {% if products|length > 0 %}
+      <!-- secction pagination -->
+      <div class="w-full flex justify-center gap-2 items-center  mt-20
+      {% if products|length > 3 %}{% endif %} 
 
       ">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}" class="shadow-md p-2 rounded-md bg-slate-200">previous</a>
+        {% else %}
+          <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">previous</button>
+        {% endif %}
 
-      {% if page_obj.has_previous  %}
-      <a href="?page={{ page_obj.previous_page_number}}" class="shadow-md p-2 rounded-md bg-slate-200">previous</a>
-      {% else %}
-      <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">previous</button>  
-      {% endif %}
+        {% for page in p.page_range %}
+          {% if page == page_number|to_number %}
+            <button disabled class="p-2 rounded-md bg-indigo-800 text-white">{{ page }}</button>
+          {% else %}
+            <a href="?page={{ page }}" class="p-2 rounded-md bg-slate-200 shadow-md">{{ page }}</a>
+          {% endif %}
+        {% endfor %}
 
-      {% for page in p.page_range %}
-
-      {% if  page == page_number|to_number %}
-      <button disabled class="p-2 rounded-md bg-indigo-800 text-white"> 
-        {{ page }} 
-      </button>
-      {% else %}
-      <a href="?page={{ page }}" 
-      class=" p-2 rounded-md bg-slate-200 shadow-md "> 
-      {{ page }} 
-    </a>
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}" class="shadow-md p-2 rounded-md bg-slate-200">next</a>
+        {% else %}
+          <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">next</button>
+        {% endif %}
+      </div>
+      <!-- end secction pagination -->
     {% endif %}
-    {% endfor %}
-
-    {% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number}}" class=" shadow-md p-2 rounded-md bg-slate-200">next</a>
-    {% else %}
-    <button disabled class="cursor-not-allowed opacity-50 shadow-md p-2 rounded-md bg-slate-200">next</button>  
-    {% endif %}
-
   </div>
-    <!-- end secction pagination -->
-    {% endif %}
-</div>
 
-<div class=" w-full  absolute sm:z-50 p-0 ">
-  {% include "footer.html" %}
-</div>
+  <div class="w-full absolute sm:z-50 p-0">
+    {% include 'footer.html' %}
+  </div>
 
-<script src="{% static './js/App.js' %}"></script>
+  <script src="{% static './js/App.js' %}"></script>
 {% endblock %}
