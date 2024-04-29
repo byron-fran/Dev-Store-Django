@@ -2,11 +2,12 @@ from typing import Any
 from django.core.paginator import Paginator
 from django.db.models.base import Model as Model
 from django.http.response import HttpResponse as HttpResponse
-from django.views.generic import ListView, DetailView, FormView, TemplateView
+from django.views.generic import ListView, DetailView
 from .models import Product
 from .filters import ProductFilter
 from reviews.forms import ReviewForm
 from reviews.models import Reviews
+
 
 class ProductsListView(ListView):
     model = Product
@@ -61,12 +62,16 @@ class ProductDetailView(DetailView):
     template_name = "product.html"
     
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)    
         product = Product.objects.get(slug=self.kwargs['slug'])
         stars_avg = Product.objects.avg_stars(product)
-        
-        context = super().get_context_data(**kwargs)
+           
+        if stars_avg:
+            context['stars_avg'] = round(stars_avg, 2)
+            
         context['form'] = ReviewForm
         context['reviews'] = Reviews.objects.filter(product=product)   
-        context['stars_avg'] = round(stars_avg, 2)
         context['total_reviews'] =product.reviews_set.all().count()
+
+     
         return context

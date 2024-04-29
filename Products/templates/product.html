@@ -11,60 +11,64 @@
 {% load product_stock %}
 
 <main class="w-full">
- 
     <form 
-        action="{% url 'add_to_cart' product.id %}"
-        method="POST"
-        class="grid md:grid-cols-2 justify-center mt-20 w-[90%] mx-auto"
+    action="{% url 'add_to_cart' product.id %}"
+    method="POST"
+    class="grid md:grid-cols-2 justify-center mt-20 w-[90%] mx-auto"
     >
-        {% csrf_token %}
-        <div>
-            <img class="w-[90%] md:w-[400px] mx-auto" src={{ product.image_url.url }} alt={{product.name}}/>
-        </div>
-        <div class="flex flex-col border border-gray-200 rounded-sm p-4">
-            <h1 class=" font-extrabold text-2xl uppercase block ">{{product.name}}</h1>
-            <p class="mt-10">{{ product.description }}</p>
-            <div class="flex mt-4 items-center gap-4">
-                {% if product.stock > 0 %}
-              
-                    <form method="POST" class="flex flex-col">
-                        
-                        <select name="quantity" class=" border border-gray-200 rounded-md w-[50%]">
-                            {% for n in product.stock|get_range|default:"1" %}
-                                <option class="focus:outline-indigo-600 text-indigo-600" name="quantity" value="{{  n|add:1 }}">{{ n|add:1  }}</option>
-                            {% endfor %}
-                        
-                        </select>
-                    </form>
-                    <p class="text-3xl text-indigo-600"> {{ product.price|currency }} </p>
-                    {% if stars_avg %}
-                        <div class="flex items-center">
-                            {% for stars in stars_avg|fixed_number|get_range %}
-                                <svg class="w-4 h-4 text-yellow-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
-                                </svg>
-                            {% endfor %}
-                            {% for stars in stars_avg|fixed_number|get_remainder %}
-                            <svg class="w-4 h-4 text-gray-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
-                            </svg>
-                        {% endfor %}
-                        <p class="ml-2 font-bold">{{ stars_avg }}</p>
-                        <p class="ml-2">({{total_reviews}})</p>
-                        </div>
-                    {% endif %}
-                {% endif %}
+    {% csrf_token %}
+    <div>
+        <img class="w-[90%] md:w-[400px] mx-auto" src={{ product.image_url.url }} alt={{product.name}}/>
+    </div>
+    <div class="flex flex-col border border-gray-200 rounded-sm p-4">
+        <h1 class=" font-extrabold text-2xl uppercase block ">{{product.name}}</h1>
+        <p class="mt-10">{{ product.description }}</p>
+        <div class="flex mt-4 items-center gap-4">
+            {% if product.stock > 0 %}
+            
+            <form method="POST" class="flex flex-col">
+                
+                <select name="quantity" class=" border border-gray-200 rounded-md w-[50%]">
+                    {% for n in product.stock|get_range|default:"1" %}
+                    <option class="focus:outline-indigo-600 text-indigo-600" name="quantity" value="{{  n|add:1 }}">{{ n|add:1  }}</option>
+                    {% endfor %}
+                    
+                </select>
+            </form>
+            <p class="text-3xl text-indigo-600"> {{ product.price|currency }} </p>
+            {% if stars_avg %}
+
+            {% if product.reviews_set.all.count > 0 %}
+            
+            <div class="flex items-center">
+                {% for stars in stars_avg|fixed_number|get_range %}
+                <svg class="w-4 h-4 text-yellow-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
+                </svg>
+                {% endfor %}
+                {% for stars in stars_avg|fixed_number|get_remainder %}
+                <svg class="w-4 h-4 text-gray-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
+                </svg>
+                {% endfor %}
+                <p class="ml-2 font-bold">{{ stars_avg }}</p>
+                <p class="ml-2">({{total_reviews}})</p>
             </div>
+            {% endif %}
+
+            {% endif %}
+            {% endif %}
+        </div>
         
-            <div>
-                {% if request.user.is_authenticated %}
-                    <button
-                        id="btn_cart"
-                        type="submit"
-                        {% if  product.stock|product_stock %}
-                            disabled
-                        {% endif %}
-                        class="bg-indigo-800 w-full hover:bg-indigo-900 {% if product.stock|product_stock %}cursor-not-allowed hover:opacity-70 {% else %} cursor-pointer {% endif%} p-2 rounded-md flex  justify-center items-center gap-4 text-white text-center font-bold mt-4  ">
+        <div>
+            {% if request.user.is_authenticated %}
+            <button
+            id="btn_cart"
+            type="submit"
+            {% if  product.stock|product_stock %}
+            disabled
+            {% endif %}
+            class="bg-indigo-800 w-full hover:bg-indigo-900 {% if product.stock|product_stock %}cursor-not-allowed hover:opacity-70 {% else %} cursor-pointer {% endif%} p-2 rounded-md flex  justify-center items-center gap-4 text-white text-center font-bold mt-4  ">
                             {% if  product.stock|product_stock %}
                                 Out of stock
                             {% else %}

@@ -10,7 +10,6 @@ class Category(models.Model):
     class Meta:
         ordering =  ['-name']
         
-    
 class Mark (models.Model):
     name = models.CharField(max_length=200)
     
@@ -19,7 +18,8 @@ class Mark (models.Model):
     class Meta:
         ordering =  ['-name']
         db_table='marks'
-        
+  
+ 
 class Product (models.Model):
 
     id = models.UUIDField(
@@ -31,10 +31,10 @@ class Product (models.Model):
     description = models.TextField()
     price = models.FloatField()
     stock = models.IntegerField()
-    image_url = models.FileField(upload_to='products/', blank=True)
     descount = models.FloatField()
     mark = models.ForeignKey(Mark, on_delete=models.CASCADE, null=True,blank=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=False)
+    image_url = models.FileField(upload_to='products/', blank=True)
     slug = models.SlugField(null=True, blank=True)
     # field for manager
     objects = ProductsManager()
@@ -47,4 +47,3 @@ class Product (models.Model):
         db_table= 'products'
 
 
- 
