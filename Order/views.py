@@ -64,7 +64,7 @@ def remove_from_cart(request, pk):
 
 # lsit view to show cart list
 class ListOrdersView(LoginRequiredMixin, ListView):
-    login_url = '/accounts/login'
+    login_url = '/accounts/login/'
     template_name = 'cart.html'
     context_object_name = 'orders'
     model = Order
