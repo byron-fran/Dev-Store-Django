@@ -3,6 +3,7 @@ from Auth.models import User
 from Products.models import Product
 from .managers import OrderManager
 # Create your models here.
+
 class Order(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)

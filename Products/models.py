@@ -4,6 +4,7 @@ from .managers import ProductsManager
 
 class Category(models.Model):
     name = models.CharField(max_length=200, )
+    image = models.FileField(upload_to='categories/', null=True, blank=True)
     
     def __str__(self):
         return self.name

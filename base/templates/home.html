@@ -5,23 +5,9 @@
 {% include 'navbar.html' %}
 
   <main class="bg-[url('./images/grafico1.jpg')] sm:mt-[5.5rem] xl:mt-14 gap-4 bg-cover bg-center  bg-no-repeat w-full xl:h-[600px] md:h-[450px] bg-black bg-blend-multiply bg-opacity-70 flex flex-col sm:flex-row justify-center items-center">
-    <div class=" flex-1 p-10">
-      <div class="swiper mySwiper relative my-auto h-[350px] sm:h-full w-[300px] sm:w-[300px] md:w-[350px] xl:w-[600px]">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide text-center bg-white flex justify-center items-center">
-            <img class="block w-full my-auto h-full object-cover" src="{% static './images/dev-store-2.jpg' %}" alt="slider">
-          </div>
-          <div class="swiper-slide text-center bg-white flex justify-center items-center">
-            <img class="block w-full h-full object-cover" src="{% static './images/dev-store-1.jpg' %}" alt="slider">
-          </div>
-        </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
-      </div>
-    </div>
 
-    <div class="flex flex-col justify-center p-10 w-full flex-1 text-center text-white">
+    {% include "carusel.html" %}
+    <div class="flex flex-col justify-center p-10 w-full text-center text-white">
       <h1 class="text-white md:text-3xl font-extrabold">The best accessories for programmers</h1>
       <p class="text-white mt-10 text-left line-clamp-5 md:line-clamp-6">
         {% lorem 90 w random %}
@@ -30,7 +16,7 @@
   </main>
 
   {% comment %}Products in offer{% endcomment %}
-  <h2 class="text-center mt-8 text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-800 to-green-600">The best deals</h2>
+  <h2 class="text-center text-2xl font-sans mt-10 ">The best deals</h2>
   <section class="grid grid-cols-4 mx-auto w-[90%] my-8 gap-4">
     {% for product in products_offer %}
       <div>
@@ -47,8 +33,9 @@
     {% endfor %}
   </section>
   {% comment %}About{% endcomment %}
-
-  <section class="mt-10 bg-[url('images/tecno-2.webp')] bg-cover bg-center bg-no-repeat w-full grid md:grid-cols-2 grid-rows-2 md:grid-rows-none md:h-[20rem]">
+  {% include "category.html" %}
+  <!--About secction-->
+  <section class="mt-10 bg-[url('images/tecno-2.webp')] bg-cover bg-center bg-no-repeat w-full grid md:grid-cols-2 grid-rows-2 md:grid-rows-none md:h-[20rem] mb-20">
     <div class="text-white text-center bg-black bg-opacity-70 p-4">
       <h2 class="font-extrabold text-2xl">Why buy here?</h2>
       <p class="line-clamp-5 md:line-clamp-[10] mt-8">
@@ -58,7 +45,8 @@
     <div></div>
   </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="{% static './js/slider.js' %}"></script>
+
+
+
 {% include 'footer.html' %}
 {% endblock %}
