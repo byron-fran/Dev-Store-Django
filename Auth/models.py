@@ -16,7 +16,7 @@ class User(AbstractUser):
         help_text="username must be unique",
         error_messages="Username is required",
         max_length=50,
-        unique=False
+        unique=True
     )
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'email'
