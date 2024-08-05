@@ -1,0 +1,76 @@
+
+{% load static %}
+{% load verify_favorite %}
+{% load format_currency %}
+{% load widget_form %}
+{% load converted_number %}
+{% load get_range %}
+{% load get_remainder %}
+{% load get_avg %}
+{% load fixed_number %} 
+
+<li class="shadow-md p-4 rounded-md mb-6">
+    <!-- Secction favorite icon -->
+    <div class="flex justify-end">
+      {% if request.user.is_authenticated %}
+        {% if product|verify_favorite:request.user %}
+          <a href="{% url 'favorites:remove' pk=product.id  %}?path={{ request.get_full_path }}">
+            <svg class="w-6 h-6 text-pink-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+            </svg>
+          </a>
+        {% else %}
+          <a href="{% url 'favorites:add' product.id  %}?path={{ request.get_full_path }}">
+            <svg class="w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+            </svg>
+          </a>
+        {% endif %}
+
+      {% else %}
+        <a href="{% url 'auth:account_login' %}">
+          <svg class="w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Image of product -->
+    <img class="md:w-[150px] mx-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-110" src="{{ product.image_url.url }}" alt="{{ product.name }}" />
+    <!-- Secction of description of product -->
+
+    <!-- Secction of stars -->
+    <div class="flex flex-col justify-center items-center mt-4">
+      <div class="flex items-center mt-1">
+        {% if product.reviews_set.all.count > 0 %}
+          {% for star in product|get_avg_stars|fixed_number|get_range %}
+            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+            </svg>
+          {% endfor %}
+          {% for star in product|get_avg_stars|fixed_number|get_remainder %}
+            <svg class="w-4 h-4 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+            </svg>
+          {% endfor %}
+          <p class="font-bold ml-1">{{ product|get_avg_stars }}</p>
+          <p class="ml-2">({{ product.reviews_set.all.count }})</p>
+        {% endif %}
+      </div>
+      <!-- End secction of stars -->
+
+      <p class="text-indigo-800 font-medium text-center mb-2">{{ product.name }}</p>
+      <!-- button add to cart -->
+      <div class="flex w-full">
+        <a href="{% url 'product:detail_product' product.slug %}" class="bg-indigo-800 text-white p-2 font-bold rounded-lg w-[80%] mx-auto flex justify-center items-center text-center gap-4">
+          <p class="text-white text-[15px]">{{ product.price|currency }}</p>
+          <svg class="w-6 h-6 text-white hover:transition-all hover:scale-125" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 12H5m14 0-4 4m4-4-4-4" />
+          </svg>
+        </a>
+      </div>
+      <!-- End button add to cart -->
+    </div>
+    <!-- End secction of description of product -->
+  </li>

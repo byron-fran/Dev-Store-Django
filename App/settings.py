@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'django.contrib.messages',
+    # 'compressor',
     'tailwind',
     'theme',
     'django_browser_reload',
@@ -219,8 +220,16 @@ TAILWIND_APP_NAME = 'theme'
 
 NPM_BIN_PATH = 'npm.cmd'
 
+# Tailwindcss comporesor
+# COMPRESS_ROOT = BASE_DIR / 'static'
+
+# COMPRESS_ENABLED = True
+
+# STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
 # AUTH_USER_MODEL = 'Auth.User'
 APPEND_SLASH=False
+
 
 #email
 if DEBUG:
