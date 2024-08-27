@@ -1,6 +1,10 @@
 from django.db import models
 import uuid
 from .managers import ProductsManager
+from PIL import Image
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from cloudinary.models import CloudinaryField
 
 class Category(models.Model):
     name = models.CharField(max_length=200, )
@@ -48,3 +52,10 @@ class Product (models.Model):
         db_table= 'products'
 
 
+class ProductImages(models.Model):
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    image = models.FileField(upload_to='products_images/', blank=True)
+    alt_text = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f"Image for {self.product.name}"

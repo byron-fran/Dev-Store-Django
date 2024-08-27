@@ -5,7 +5,6 @@ from django.views.generic.list import ListView
 from .models import Reviews
 from .forms import ReviewForm
 from Products.models import Product
-from .models import Reviews
 
 # Create your views here.
 

@@ -3,11 +3,11 @@ from django.core.paginator import Paginator
 from django.db.models.base import Model as Model
 from django.http.response import HttpResponse as HttpResponse
 from django.views.generic import ListView, DetailView
+
+from reviews.models import Reviews
 from .models import Product
 from .filters import ProductFilter
 from reviews.forms import ReviewForm
-from reviews.models import Reviews
-
 
 class ProductsListView(ListView):
     model = Product
